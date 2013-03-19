@@ -1,0 +1,98 @@
+<!-- Background image with insert shred over -->
+<!-- Carousel
+	================================================== -->
+	<div id="myCarousel" class="carousel slide">
+		<div class="carousel-inner">
+			<div class="item active">
+				<img src="/pics/slashback.jpg" alt="">
+				<div class="container">
+					<div class="carousel-caption">
+						
+						<button type="button" class="btn btn-large btn-primary" id="openAddShredModal">Shred!</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- /.carousel -->
+
+	<div class="container">
+		<div class="marketing">	
+			
+			<div class="modal hide fade videoView" backdrop="true"
+			id="addShredModal" aria-hidden="true" tabindex="-1" role="dialog"
+			aria-labelledby="myModalLabel">
+
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal"
+				aria-hidden="true">x</button>
+
+				<h2>Add new shred</h2>
+			</div>
+
+			<div class="modal-body">
+				<form enctype="multipart/form-data" id="addShredForm">
+
+					<div class="control-group">
+						<div class="controls">
+							<input name="file" type="file"/>
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label" for="inputDescription">Description</label>
+						<div class="controls"> 
+							<input type="text" id="inputDescription" name="description" placeholder="Description">
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label" for="inputTags">Tags</label>
+						<div class="controls">
+							<input type="text" id="inputTags" name="tags" 
+							placeholder="Tag1,tag2,tag3...">
+						</div> 
+					</div>
+
+					<div class="control-group">
+						<div class="controls"> 
+							<input type="button" value="Upload" class="bnt btn-primary" id="uploadButton" />
+						</div>
+					</div>
+				</form>
+				<!-- <progress></progress> --> 
+			</div>
+
+		</div>
+
+		<div id="shredModalDiv"></div>
+		
+		<h2>New shreds from fanees</h2>
+		<div id="newShredsFromFanees"></div>
+		
+		<hr id="shred" class="soften">
+		
+		<h2>Shred News</h2>
+		<br>
+		<div id="shredNews"></div> 
+		
+		<hr id="shred" class="soften">
+
+		<h2>Shreds with high rating</h2>
+		<br><br><br>		
+		<div id="topShreds"></div>
+
+		<hr id="shred" class="soften">
+
+		<h2>Shreds from shredders you might know</h2>
+		<br>
+		<div id="mightKnowShreds"></div>
+
+		<hr id="shred" class="soften">
+
+		<h2>Shreds based on tags</h2>
+		<div id="shredsByTags"></div>
+
+
+	</div>
+</div>
+
+

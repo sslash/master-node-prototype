@@ -1,0 +1,23 @@
+	<div class="row-fluid">
+		<div class="span4">
+			<a href=""> <img class="imageClipped newsItemImage"
+				src="/pics/profiles/<%= model.profileImagePath %>" />
+			</a>
+		</div>
+		<div class="span8">
+			<p><a href="#shredder/<%= model._id %>"><%= model.username %></a></p>
+			<p><small>Guitars: 
+			<% _.each(model.guitars, function(guitar, i) { %>
+				<% if ( i > 0 ) { %>,<% } %>
+				<%= guitar %>
+			<% }) %>
+			</small></p>
+			<p> <small> Equiptment:
+			<% _.each(model.equiptment, function(eq, i) { %>
+				<% if ( i > 0 ) { %>,<% } %> 
+				<%= eq %>
+			<% }) %>
+			</small></p>
+		</div>
+	</div> 
+	</br> 

@@ -1,0 +1,16 @@
+
+<div class="span2">
+
+	<a href="#shredPool" id="byTags_<%= index %>" class="newShredsFromFaneesAncor">
+		<img class="imageClipped" 
+		src="/vidz/<%= shred.videoThumbnail %>" /> 
+	</a>
+	<p class="lead"><%= shred.description %></p>
+	<p>By: <%= shred.owner.username %></p>
+	<p>Tags:
+		<% _.each(shred.tags, function(tag, i) { %>
+		<% if ( i > 0 ) { %>, <% } %>
+		<%= tag %>
+		<% }) %>			
+	</p>
+</div>

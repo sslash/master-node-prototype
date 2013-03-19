@@ -1,0 +1,72 @@
+<!-- Navbar 
+    ================================================== -->
+    <div id="navbar-mid" class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="brand" href="#">Shredhub</a>
+          <div class="nav-collapse collapse">
+            <ul class="nav">
+              <li class="">
+                <a href="#shredPool">The Shred pool</a>
+              </li> 
+              <li class="">
+                <!-- TODO: change to window.user.username -->
+              </li>
+              <li class="">
+                <a href="battles">Battles</a>
+              </li>
+              <li class="">
+                <a href="shredders">Shredders</a>
+              </li>
+              <li class="">
+                <a href="#About">About</a>
+              </li>
+              <li class="">
+                <a href="Contact">Contact</a>
+              </li>
+              <li class="">
+                <a href="shredPool">Shred pool</a>
+              </li>
+           
+              <li class=""> 
+				<p class="navbar-text pull-right">
+					 <a href="#signInModal" role="button" data-bypass="true"
+						class="navbar-link" data-keyboard="true" data-toggle="modal"
+						data-backdrop="true" data-target="#signInModal">Sign in</a> 
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div> 
+    </div> 
+
+<!-- Sign in Modal -->
+<div class="modal hide fade in" id="signInModal" tabindex="-1" role="dialog" 
+aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal"
+			aria-hidden="true">x</button>
+		<h3 id="myModalLabel">Sign in</h3> 
+		<p id="loginError" class="text-error"></p>
+	</div>
+
+	<!-- FORM INPUT -->
+	<div class="modal-body form-inline">
+		<div class="control-group">
+
+			<input type="text" class="input-small" placeholder="Username"
+				name="j_username" id="username">
+			<input type="password" class="input-small" placeholder="Password" 
+			name="j_password" id="password">
+			<label class="checkbox"> <input type="checkbox">
+				Remember me
+			</label> 
+			<button class = "btn" id="loginButton">Login</button>			
+		</div>
+	</div>
+</div>

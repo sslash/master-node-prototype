@@ -1,0 +1,70 @@
+<div class="modal hide fade videoView" id="playVideoModal" aria-hidden="true" tabindex="10" role="dialog"
+	aria-labelledby="myModalLabel">
+ 
+	<div class="modal-header"> 
+		<button type="button" class="close" data-dismiss="modal" 
+			aria-hidden="true">x</button>
+
+		<h2><%= shred.description %></h2>
+		<h4><%= shred.owner.username %></h4>
+	</div>
+
+	<div class="modal-body">
+		<!-- video.js -->
+
+		<video id="videoInModal" class="video-js vjs-default-skin" controls
+			preload="auto" width="640">
+			<source src="/vidz/<%=shred.videoPath %>"
+				type='video/mp4'>
+		</video>
+	</div>  
+ 
+	<div class="modal-footer">
+		<div class="row-fluid"> 
+			<div class="span6">
+				<p >
+					<small> Created at: <%= new Date(shred.timeCreated).toUTCString() %> </small> 
+				</p>  
+				<p class="lead">Number of raters:  <%= shred.shredRating.numberOfRaters %></p> 
+				<p class="lead">Rating: 
+					<% if (shred.shredRating.currentRating > 0) { %>
+					<%= shred.shredRating.currentRating / shred.shredRating.numberOfRaters %> 
+					<% } else { %>
+					<%= 0 %> 
+					<% } %>				 
+				</p>	
+				
+				<p class="small">
+					Rate it: <input type="range" min="0" max="10" name="rating"
+						value="5">
+					<button id="rateButton" class="btn btn-small btn-primary">\m/</button>
+				</p>
+					<input id="commentText" type="text" name=text
+						placeholder="Leave a comment!">
+					<button id="commentButton" class="btn btn-small btn-primary">Submit</button>  
+			</div> 
+ 
+			<div class="span6">
+				<p class="lead">Comments</p>
+				<table class="table table-condensed">				
+					<tr>
+						<th>Text</th>
+						<th>By</th>
+						<th>At</th>
+					</tr>
+					
+				<%_.each(shred.shredComments,function(comment, i){%>
+						<tr>
+							<td><%= comment.text %></td>
+							<td><a href="/shredder/<%= comment.commenterId %>"><%= comment.commenterName %></a></td>
+							<td><%= new Date(comment.timeCreated).toUTCString() %></td>
+							<td><button type="button" class="close" id="del-<%= i %>" >x</button></td>
+						</tr>			
+					<%});%>  
+				</table>
+			</div>
+		</div>
+	</div>
+</div>
+
+

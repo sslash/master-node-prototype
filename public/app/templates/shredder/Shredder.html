@@ -1,0 +1,143 @@
+<div class="container">
+	<div class="marketing">
+		<h1><%= shredder.username %></h1>
+		<p class="marketing-byline"><%= shredder.description %></p>
+
+		<div class="row-fluid">
+
+			<div class="span6">
+				<img alt="Profile image"
+					src="/pics/profiles/<%= shredder.profileImagePath %>"
+					width="300px" class="img-rounded" />
+			</div>
+			<div class="span6">
+				<p>Level: <%= shredder.levelLabel %> </p>
+				<p>Experience points: <%= shredder.shredderLevel  %> </p>
+
+				<!-- FAN OR BECOME FAN -->
+				<% if ( renderFanBtn ) { %>
+					<button class="btn btn-success" id="becomeFanButton">Become a fan</button> 
+				<% } %>
+			</div> 
+		</div>
+
+		<hr class="soften">
+		<h2>Shred specs</h2>
+		</br>
+
+		<div class="row-fluid">
+			<div class="span3">
+				<p>Birthdate:</p>
+			</div>
+
+			<!--/span-->
+			<div class="span9">
+				<p><%= shredder.birthdate  %></p>
+			</div>
+			<!--/span-->
+		</div>
+
+		<div class="row-fluid">
+			<div class="span3">
+				<p>Country:</p>
+			</div>
+
+			<!--/span-->
+			<div class="span9">
+				<p><%= shredder.country  %></p>
+			</div>
+			<!--/span-->
+		</div>
+
+		<div class="row-fluid">
+			<div class="span3">
+				<p>Email:</p>
+			</div>
+
+			<!--/span-->
+			<div class="span9">
+				<p><%= shredder.email  %></p>
+			</div>
+			<!--/span-->
+		</div>
+		<div class="row-fluid">
+			<div class="span3">
+				<p>Guitar:</p>
+			</div>
+
+			<!--/span-->
+			<div class="span9">
+				<% _.each(shredder.guitars , function(guitar) { %>
+				<p><%= guitar %></p>
+				<% }); %>
+			</div>
+		</div>
+		<!-- row fluid -->
+
+		<div class="row-fluid">
+			<div class="span3">
+				<p>Equiptment:</p>
+			</div>
+
+			<!--/span-->
+			<div class="span9">
+				<% _.each(shredder.equiptment , function(equiptment) { %>
+				<p><%= equiptment %></p>
+				<% }); %>
+			</div>
+			<!-- row fluid -->
+		</div>
+
+
+		<hr class="soften">
+		<div id="battleRelationship"></div>
+		<hr class="soften">
+
+		<h2><%= shredder.username  %>'s fanees</h2>
+
+		<p>List fanees</p>
+		<div class="row-fluid">
+			<div class="span1">
+				<a class="nextShred" href="#">&lsaquo;</a>
+			</div>
+			<% _.each( _.first(shredder.fanees, 5), function(fanee) { %>
+			<div class="span2">
+				<a href="#shredder/<%= fanee._id %>">
+					<img class="imageClipped"
+					src="/pics/profiles/<%= fanee.profileImagePath %>" />
+				</a>	   
+				<p><%= fanee.username %></p> 
+			</div>
+			<% }) %>
+
+			<div class="span1"> 
+				<a class="nextShred" href="#">&rsaquo;</a>
+			</div>
+		</div> 
+
+		<hr class="soften"> 
+		<div class="row-fluid">
+			<div class="span1">
+				<a class="nextShred" href="#">&lsaquo;</a>
+			</div>
+			<h2><%= shredder.username  %>'s shreds</h2>
+
+			<% _.each( _.first(shredder.shreds, 5), function(shred) { %>
+			<div class="span2">
+				<a href="#shredder/<%= shred._id %>">
+					<img class="imageClipped"
+					src="/vidz/<%= shred.videoThumbnail %>" />
+				</a>	   
+				<p><%= shred.description %></p> 
+			</div>
+			<% }) %>
+			<div class="span1"> 
+				<a class="nextShred" href="#">&rsaquo;</a>
+			</div>
+		</div>
+	</div>
+</div>
+
+<footer>
+	<p>&copy; Mikey 2012</p>
+</footer>

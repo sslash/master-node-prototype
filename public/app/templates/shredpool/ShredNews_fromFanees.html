@@ -1,0 +1,15 @@
+<div class="row-fluid">
+<div class="span4">
+	<a href=""> <img class="imageClipped newsItemImage"
+		src="/vidz/<%= model.videoThumbnail %>" width="20" />
+	</a>
+</div>
+<div class="span8">
+	<p>
+		<small><%= model.description %></small>
+	</p>
+	<p>By:<a href="#shredder/<%= model.owner._id %>"> 
+		<%= model.owner.username %>
+	</a></p>
+</div>
+</div>

@@ -1,0 +1,13 @@
+<div class="row-fluid">
+	
+		<% if ( _.first(model.battleRounds ).battleesShred != null ) { %>
+			<p> <%= model.battlee.username %> added a 
+			<a href="#battles/<%= model._id %>">shred </a>			
+		<% } else { %>
+			<p> <%= model.battler.username %> added a 			
+		<% } %>
+		<a href="#battles/<%= model._id %>">shred </a> in a battle
+		<small> at <%= new Date(model.lastBattleShred).toUTCString() %></small> </p>
+		
+		<hr id="shred" class="soften">
+</div>

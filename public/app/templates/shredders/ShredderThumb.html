@@ -1,0 +1,16 @@
+
+<div class="row-fluid">
+	<div class="span2">
+		<img src="/pics/profiles/<%= model.profileImagePath %>"
+		alt="Profile img" width="304">
+		<!--/span2-->
+	</div>
+	<div class="span10">
+		<a href="/shredder/<%= model._id %>"><%= model.username %></a>
+		<p class="lead"><%= model.description %></p>
+		<p class="lead">Level: <%= model.shredderLevel == 0 ? 0 : Math.floor(model.shredderLevel/10)  %></p>
+		<!-- /span10 -->
+	</div>
+	<!-- /row-fluid -->
+</div>
+<hr>

@@ -1,0 +1,56 @@
+<h2>Challenge <%= username %> to a battle</h2> 
+<button class="btn btn-success" id="challengeToBattleButton">Battle</button> 
+
+<div class="modal hide fade videoView" backdrop="true"
+	id="challengeToBattleModal" aria-hidden="true" tabindex="-1"
+	role="dialog" aria-labelledby="myModalLabel">
+
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal"
+			aria-hidden="true">x</button>
+
+		<h2>Battle</h2>
+		<p class="lead">
+			Add a opening shred against <%=	username %> 
+		</p> 
+	</div>
+
+	<div class="modal-body">
+		<div class="control-group">
+
+				<div class="control-group">
+					<label class="control-label">Set battle style</label>
+					<div class="controls">
+
+						<select class="input-large" id="battleStyle">
+							<option>Bet you can't shred this</option>
+							<option>Shred something better in the same key</option>
+							<option>Shred something better using this scale</option>
+							<option>Shred faster then this</option>
+						</select>
+					</div>
+				</div>
+					<!-- Image upload -->
+			<form enctype="multipart/form-data" id="addBattleRequestForm">
+
+
+				<!-- Shred video -->
+				<div class="control-group">
+					<label class="control-label" for="shredVideo">Shred video</label>
+
+					<div class="controls">
+						<input name="file" type="file" />
+					</div>
+				</div> 
+
+				<div class="modal-footer">
+					<button class="btn btn-primary" id="addBattleShredButton">I'm ready!</button>
+				</div>
+			</form>
+		</div>
+	</div>
+
+
+</div>
+
+

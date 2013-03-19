@@ -1,0 +1,19 @@
+<div class="span5">
+
+	<div class="row-fluid">
+		<div class="span6">
+			<a href="#shredPool" id="topShreds_<%= (index) %>" class="newShredsFromFaneesAncor">
+				<img class="imageClipped"
+				src="/vidz/<%= shred.videoThumbnail %>" /> 
+			</a>
+		</div>
+
+		<div class="span6">
+			<p class="lead">Rating: <%= shred.shredRating.currentRating %> </p> 
+			<p>By: <%= shred.owner.username %> </p>				
+			<p>Name: <%= shred.description %> </p> 
+			<p>Created at: <%= new Date(shred.timeCreated).toUTCString() %> </p>
+
+		</div>
+	</div>
+</div> 
