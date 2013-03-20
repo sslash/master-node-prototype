@@ -160,7 +160,7 @@ function(app, BaseView, Session, Battle, Shredder) {
 
 Shred.Views.ThumbnailView = BaseView.extend({
 
-    template: "shred",
+    template: "Shred",
 
     initialize : function() {
      // _.extend(this, Backbone.Events);
