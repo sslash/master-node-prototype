@@ -3,7 +3,7 @@ define([
   // Application.
   "app",
   "../baseView",
-  "../Session",
+  "../session",
   "modules/Battle",
   "modules/Shredder",
   
