@@ -116,7 +116,6 @@ exports.getShredsByRating = function(req, res) {
   }  
   return shred.getShredsByRating(req.query.page-1, req.query.offset)
   .done(function(shreds){
-    console.log("find() - success: " + JSON.stringify(shreds));
     return res.send(shreds); 
   })
   .fail(function(err){
