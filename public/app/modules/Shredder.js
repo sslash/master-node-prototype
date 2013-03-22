@@ -5,12 +5,12 @@ define([
    "../baseView",
    "../session",
    "modules/BattleRequest",
-   "modules/Twitter"
+   //"modules/Twitter"
    //"../Mediator",
 ],
 
 // Map dependencies from above array.
-function(app, BaseView, Session, BattleRequest, Twitter) {
+function(app, BaseView, Session, BattleRequest/*, Twitter*/) {
 
   // Create a new module.
   var Shredder = app.module();
@@ -155,14 +155,14 @@ function(app, BaseView, Session, BattleRequest, Twitter) {
         'page' : this.page,
         'offset' : this.offset
       });
-      this.renderTwitterCollection();
+     // this.renderTwitterCollection();
     },
-
+/*
     renderTwitterCollection : function() {
       var twitterView = new Twitter.Views.Main();
       this.showChildView("#twitterDiv", twitterView, this);
     },
-
+*/
 
     fetchNextPage : function(event) {
       event.preventDefault();
