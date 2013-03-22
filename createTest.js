@@ -22,7 +22,7 @@ var img = [ "EddieVanHalen.jpg", "RobertoDeMicheli.jpg", "michael.jpg",
 		"MikeSpike.jpg", "YngwieMalmsteen.jpg", "Roberto.jpg" ];
 
 // create 1000 shredders
-for ( var i = 1; i <= 100; i++) {
+for ( var i = 1; i <= 1000; i++) {
 
 	var r = Math.floor(Math.random() * countries.length);
 	var r2 = Math.floor(Math.random() * g.length);
@@ -31,7 +31,7 @@ for ( var i = 1; i <= 100; i++) {
 	var r5 = Math.floor(Math.random() * 100);
 
 	var sh = {
-		username : "Shreddaz" + i,
+		username : "Shredder" + i,
 		fanees : new Array(),
 		birthdate : new Date(),
 		country : countries[r],
@@ -50,28 +50,36 @@ for ( var i = 1; i <= 100; i++) {
 var shredders = db.shredder.find({});
 var count = db.shredder.count();
 
-var shr = [ "23shred1.mp4", "battle-23-8-5.mp4", "fgdf.mp4", "23shred2.mp4",
-		"battle-26-14-1.mp4", "g.mp4", "24shred5.mp4", "battle-27-10-1.mp4",
-		"h.mp4", "9shred3.mp4", "battle-29-2-1.mp4", "legato.mp4",
-		"9shred7.mp4", "battle-29-2-2.mp4", "livinprayer.mp4",
-		"battle-17-6-2.mp4", "battle-29-6-1.mp4", "lovaabadname.mp4",
-		"battle-17-7-2.mp4", "battle-29-6-2.mp4", "s.mp4",
-		"battle-23-12-1.mp4", "battle-33-8-1.mp4", "sap sapsap2.mp4",
-		"battle-23-12-2.mp4", "c.mp4", "sfhd.mp4", "battle-23-12-4.mp4",
-		"crap.mp4", "sfsdf.mp4", "battle-23-12-5.mp4", "dfh.mp4", "sleep.mp4",
-		"battle-23-12-6.mp4", "dminor.mp4", "vid.mp4", "battle-23-8-1.mp4",
-		"edf.mp4", "ynsrv.mp4", "battle-23-8-3.mp4", "f.mp4" ];
+var shr = [ "1.mp4", "13.mp4", "17.mp4", "20.mp4", "24.mp4", "26.mp4", "3.mp4",
+		"4.mp4", "8.mp4", "sapsapsap2.mp4", "sfsdf.mp4", "ynsrv.mp4", "10.mp4",
+		"14.mp4", "18.mp4", "21.mp4", "23shred1.mp4", "27.mp4", "30.mp4",
+		"5.mp4", "9.mp4", "9shred7.mp4", "crap.mp4", "dminor.mp4", "f.mp4",
+		"g.mp4", "legato.mp4", "lovaabadname.mp4", "11.mp4", "15.mp4",
+		"19.mp4", "22.mp4", "24shred5.mp4", "28.mp4", "31.mp4", "6.mp4",
+		"sfhd.mp4", "sleep.mp4", "vid.mp4", "12.mp4", "16.mp4", "2.mp4",
+		"23.mp4", "23shred2.mp4", "25.mp4", "29.mp4", "32.mp4", "7.mp4",
+		"9shred3.mp4", "c.mp4", "dfh.mp4", "edf.mp4", "fgdf.mp4", "h.mp4",
+		"livinprayer.mp4", "s.mp4" ];
+
+var thumbs = [ "23shred1.jpg", "9shred7.jpg", "crap.jpg", "dminor.jpg",
+		"f.jpg", "g.jpg", "legato.jpg", "lovaabadname.jpg", "test2.jpg",
+		"24shred5.jpg", "sfhd.jpg", "sleep.jpg", "vid.jpg", "23shred2.jpg",
+		"9shred3.jpg", "c.jpg", "dfh.jpg", "edf.jpg", "fgdf.jpg", "h.jpg",
+		"livinprayer.jpg", "s.jpg", "sfsdf.jpg", "test.jpg", "ynsrv.jpg" ];
+
 var tagsArr = [ "Lick", "Fast", "Technique", "Sweeping", "Tapping", "Cover",
 		"Solo", "Instruction", "Sound test", "Mind blowing", "Passionate",
 		"British", "Punk", "Grip", "Chords", "Melody", "Scale", "Show-off",
 		"Jazz", "Fusion", "Rock", "Metal", "Pop", "Rap", "Funk", "Acoustic",
 		"Chops", "Jam", "Improvisation" ];
+
 // Create 100 000 shreds 
-for ( var i = 1; i <= 10000; i++) {
+for ( var i = 1; i <= 50000; i++) {
 
 	var ran = Math.floor(Math.random() * count);
 	var ranS = Math.floor(Math.random() * count);
-	var ran2 = Math.floor(Math.random() * 41);
+	var ran2 = Math.floor(Math.random() * shr.length);
+	var ran3 = Math.floor(Math.random() * thumbs.length);
 	var tagsRan = Math.floor(Math.random() * tagsArr.length);
 	var tagsRan2 = Math.floor(Math.random() * tagsArr.length);
 	var ranrate = Math.floor(Math.random() * 1000);
@@ -107,10 +115,11 @@ for ( var i = 1; i <= 10000; i++) {
 			currentRating : ranrate2
 		},
 		videoPath : shr[ran2],
-		videoThumbnail : img,
+		videoThumbnail : thumbs[ran3],
 		tags : [ tagsArr[tagsRan], tagsArr[tagsRan2] ]
 	});
 }
+
 
 // Get shredders
 var shredders = db.shredder.find({});
@@ -120,7 +129,11 @@ var size = db.shredder.count();
 for ( var i = 1; i <= 10000; i++) {
 	var ran1 = Math.floor(Math.random() * size);
 	var ran2 = Math.floor(Math.random() * size);
-	var ran3 = Math.floor(Math.random() * 41);
+	var ran3 = Math.floor(Math.random() * shr.length);
+	var ran4 = Math.floor(Math.random() * thumbs.length);
+
+	if ( ran1 == ran2)
+		ran2 = Math.floor(Math.random() * size);
 
 	var battleRound = {
 
@@ -131,8 +144,7 @@ for ( var i = 1; i <= 10000; i++) {
 			},
 			timeCreated : new Date(),
 			videoPath : shr[ran3],
-			videoThumbnail : "battle_50a508930364e84086ef7b7c_battle2.jpg"
-
+			videoThumbnail : thumbs[ran4]
 		},
 		battleesShred : null
 	};
@@ -162,9 +174,12 @@ var size = db.shredder.count();
 for ( var i = 1; i <= 1000; i++) {
 	var ran1 = Math.floor(Math.random() * size);
 	var ran2 = Math.floor(Math.random() * size);
-	var ran3 = Math.floor(Math.random() * 41);
+	var ran3 = Math.floor(Math.random() * shr.length);
+	var ran4 = Math.floor(Math.random() * thumbs.length);
 
-	if ( ran1 != ran2) {
+	if ( ran1 == ran2)
+		ran2 = Math.floor(Math.random() * count);
+
 	db.battleRequest.save({ // At first I used DBRefs for this
 		battler : {
 			_id : shredders[ran1]._id,
@@ -176,10 +191,9 @@ for ( var i = 1; i <= 1000; i++) {
 		},
 		timeCreated : new Date(),
 		battleStyle : "Bet you can't shred this",
-		videoPath : "battle-23-8-5.mp4",
-		videoThumbnail : "battle_50a508930364e84086ef7b7c_battle2.jpg",
+		videoPath : shr[ran3],
+		videoThumbnail : thumbs[ran4],
 	});
-	}
 }
 
 
