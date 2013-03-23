@@ -72,11 +72,13 @@ function(app, BaseView, Session, BattleRequest/*, Twitter*/) {
     * Given a shredder and a list of battles; checks if they are in a battle
     */
     getIfWeAreInBattleTogether : function (shredderId, listOfBattles){
+      if ( listOfBattles) {
         for ( var i = 0; i < listOfBattles.length; i++) {
           if ( this.checkIfInBattle(shredderId, listOfBattles[i])){
             return listOfBattles[i]._id;
           }
         }
+      }
         return null;
     },
 
@@ -90,11 +92,13 @@ function(app, BaseView, Session, BattleRequest/*, Twitter*/) {
     },
 
     getIfIHaveSentYouABR : function(shredderId, listOfBrs){
+      if ( listOfBrs) {
       for ( var i = 0; i < listOfBrs.length; i++) {
           if ( this.checkIfIsBattlerInBr(shredderId, listOfBrs[i])){
             return listOfBrs[i];
           }
         }
+      }
         return null;
     },
 
@@ -103,11 +107,13 @@ function(app, BaseView, Session, BattleRequest/*, Twitter*/) {
     },
 
     getIfYouHaveSentMeABR : function(shredderId, listOfBrs){
+      if ( listOfBrs){
       for ( var i = 0; i <listOfBrs.length; i++) {
           if ( this.checkIfIsBattleeInBr(shredderId, listOfBrs[i])){
             return listOfBrs[i]._id;
           }
         }
+      }
         return null;
     },
 
