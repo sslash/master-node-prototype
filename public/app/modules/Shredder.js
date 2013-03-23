@@ -201,7 +201,7 @@ function(app, BaseView, Session, BattleRequest/*, Twitter*/) {
 
 
   Shredder.Views.ShredderView = BaseView.extend({
-    template : "shredder/shredder",
+    template : "shredder/Shredder",
     battleRelationshipDiv : "#battleRelationship",
 
     events : {
