@@ -5,7 +5,7 @@ define([
   "../baseView",
   "../session",
   "modules/Battle",
-  "modules/Shredder",
+  "modules/Shredder"
   
   ],
 
@@ -26,9 +26,9 @@ function(app, BaseView, Session, Battle, Shredder) {
         numberOfRaters : 0,
         currentRating : 0
       },
-      shredComments: new Array(),
+      shredComments: [],
       owner: {},
-      tags: new Array(),
+      tags: [],
       shredType:"normal"
     },
 
@@ -71,8 +71,8 @@ function(app, BaseView, Session, Battle, Shredder) {
       }
       var shredRating = this.get('shredRating');
       shredRating.numberOfRaters ++;
-      shredRating.currentRating += parseInt(rateValue);     
-      this.increaseShredderLevel(parseInt(rateValue));
+      shredRating.currentRating += parseInt(rateValue, 10);     
+      this.increaseShredderLevel(parseInt(rateValue,10));
 
       this.save();
       this.trigger('change');
@@ -86,7 +86,7 @@ function(app, BaseView, Session, Battle, Shredder) {
     
     deleteComment : function(index) {
       var comments = this.get('shredComments');
-      var intIndex = parseInt(index);
+      var intIndex = parseInt(index,10);
       comments.splice(intIndex, 1);  
       this.trigger('change');   
       this.save('shredComments', comments);
@@ -96,7 +96,7 @@ function(app, BaseView, Session, Battle, Shredder) {
       var shredComment = {
         text : commentText,
         commenterId : commenter._id,
-        commenterName : commenter.username,
+        commenterName : commenter.username
        // timeCreated : new Date()
       };
 
@@ -134,9 +134,9 @@ function(app, BaseView, Session, Battle, Shredder) {
     },
 
     initURL: function(attr){
-      if ( attr['page'] ) this.page = attr['page'];
-      if ( attr['query'] ) this.query = attr['query'];
-      if ( attr['offset'] ) this.offset = attr['offset'];
+      if ( attr.page ) this.page = attr.page;
+      if ( attr.query ) this.query = attr.query;
+      if ( attr.offset ) this.offset = attr.offset;
     },
     
     page : 1,
@@ -206,7 +206,7 @@ Shred.Views.ThumbnailView = BaseView.extend({
 
   resetShredModel : function(newModel) {
     this.model = newModel;
-  },
+  }
 
 });
 
@@ -334,7 +334,7 @@ Shred.Views.RowView = BaseView.extend({
            view.postRender();       
          });
 
-        } else if ( i % columns == 0) {
+        } else if ( i % columns === 0) {
           html += rowEndHtml;
           html += rowStartHtml;
         }
@@ -384,11 +384,11 @@ Shred.Views.RowView = BaseView.extend({
        for ( var i = start, y=0; i < stop; i++, y++){
         var model = this.collection.at(i);
         this.subViews[y].resetShredModel(model);
-        this.subViews[y].render()
-        .done(function(view) {
-          $(that.options.selector).append(view.$el.html()); 
-          view.resetListeners();  
-        });
+         this.subViews[y].render()
+         .done(function(view) {
+           $(that.options.selector).append(view.$el.html()); 
+           view.resetListeners();  
+         });
       }
     }
   }),
@@ -433,13 +433,6 @@ Shred.Views.ModalView = BaseView.extend({
       var commentIndex = event.currentTarget.id.split("-")[1];
       this.model.deleteComment(commentIndex);
     },
-
-    rateShred : function(event) {
-      event.preventDefault();
-      var rateVal = $('input[type=range]').val();
-      console.log("rate: " + rateVal);
-      this.model.addRating(rateVal);
-    },
     
     saveComment : function(event) {
       event.preventDefault();
@@ -465,7 +458,7 @@ Shred.Views.ModalView = BaseView.extend({
       this.newestShreds.initURL({
         page : 1,
         offset : 5,
-        query : "newShredsFromFanees/" + this.shredderId,
+        query : "newShredsFromFanees/" + this.shredderId
       });
       this.newestBattles = new Battle.Collection();
       this.newestBattles.initURL({
@@ -473,6 +466,7 @@ Shred.Views.ModalView = BaseView.extend({
         page : 1,
         offset: 3
       });
+
       this.mightLikeShredders = new Shredder.Collection(); 
       this.mightLikeShredders.initURL({
         query : "mightKnowShredders/" + this.shredderId,

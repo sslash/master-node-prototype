@@ -3,7 +3,7 @@ define([
   "app",
   "modules/Main",
   "modules/ShredPool",
-  "modules/Shredder",
+  "modules/Shredder"
 ],
 
 function(app, Main, ShredPool, Shredder) {

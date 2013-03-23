@@ -97,8 +97,8 @@ populateSessionData : function(){
 fetchBattleRequests : function() {
   var dfr = $.Deferred();
 
-  var battleCollection = new BattleRequest.Collection()
-    battleCollection.setShredderId(Session.getUser()._id);
+  var battleCollection = new BattleRequest.Collection();
+  battleCollection.setShredderId(Session.getUser()._id);
 
   battleCollection.fetch({
     beforeSend: function(xhr){

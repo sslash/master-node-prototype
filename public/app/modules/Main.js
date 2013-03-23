@@ -12,7 +12,7 @@ define([
 
   // Other
   //"mediator",
-  "session",
+  "session"
 ],
 
 // Map dependencies from above array.
@@ -72,7 +72,7 @@ function(app, BaseView, Shred, User, Battle, BattleRequest, /*Mediator,*/ Sessio
         return {
           user: Session.getUser(),
           battleRequests : Session.getIncomingBattleRequests()
-        }
+        };
       } else {
         return {};
       }
@@ -242,14 +242,14 @@ function(app, BaseView, Shred, User, Battle, BattleRequest, /*Mediator,*/ Sessio
                  view.postRender();       
                 });
 
-            } else if ( i % rows == 0) {
+            } else if ( i % rows === 0) {
               html += rowEndHtml;
               html += rowStartHtml;
             }
             i++;           
           });
       }, this);
-    },
+    }
   });
 
   // Return the module for AMD compliance.

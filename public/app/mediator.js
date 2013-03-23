@@ -27,7 +27,7 @@ function(app, mediator) {
     for (var i = 0, l = channels[channel].length; i < l; i++) {
       var subscriber = channels[channel][i];
       if ( subscriber.context == context ) {
-        console.log("found equal " ) 
+        console.log("found equal " );
         channels[channel][i] = null;
         console.log("channels: " + channel + " Length: " + channels[channel][i]);
         break;
@@ -46,7 +46,7 @@ function(app, mediator) {
     var args = [].slice.call(arguments, 1);
     for (var i = 0, l = channels[channel].length; i < l; i++) {
       var subscriber = channels[channel][i];
-      if ( subscriber != null) {
+      if ( subscriber !== null) {
         console.log("publishing");
         subscriber.subscription.apply(subscriber.context, args);
       }

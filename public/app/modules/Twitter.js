@@ -2,7 +2,7 @@
 define([
   // Application.
   "app",
-   "../baseView",
+   "../baseView"
 ],
 
 // Map dependencies from above array.
@@ -18,7 +18,7 @@ function(app, BaseView) {
   // Default Collection.
   Twitter.Collection = Backbone.Collection.extend({
     url: function () {
-      return 'http://search.twitter.com/search.json?q=' + this.query + '&page=' + this.page + '&callback=?'
+      return 'http://search.twitter.com/search.json?q=' + this.query + '&page=' + this.page + '&callback=?';
     },
     // Because twitter doesn't return an array of models by default we need
     // to point Backbone.js at the correct property
@@ -26,7 +26,7 @@ function(app, BaseView) {
       return resp.results;
     },
     page: 1,
-    query: 'Guitars',
+    query: 'Guitars'
   });
 
   // Default View.
@@ -70,7 +70,7 @@ function(app, BaseView) {
     },
 
     serialize : function() {
-      tweets: this.twitterCollection.models
+      return {tweets: this.twitterCollection.models};
     }
   });
 

@@ -19,7 +19,7 @@ function(app) {
       battlee : {},
       battleStyle : '',
       round : 1,
-      battleRounds : new Array()
+      battleRounds : []
     }
 
   });
@@ -33,10 +33,10 @@ function(app) {
     },
     
     initURL: function(attr){
-      if ( attr['page'] ) this.page = attr['page'];
-      if ( attr['query'] ) this.query = attr['query'];
-      if ( attr['offset'] ) this.offset = attr['offset'];
-    },
+      if ( attr.page ) this.page = attr.page;
+      if ( attr.query ) this.query = attr.query;
+      if ( attr.offset ) this.offset = attr.offset;
+    }
 
   });
 

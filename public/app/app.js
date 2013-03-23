@@ -2,7 +2,7 @@ define([
   "backbone.layoutmanager",
   "vendor/js/libs/bootstrap/bootstrap",
   "video",
-  "mediator",
+  "mediator"
 
 ], function(bl,bootstrap,video,Mediator) {
 
@@ -19,19 +19,19 @@ define([
       
       // Concatenate the file extension.
       var prefix = "app/templates/";
-      var path = prefix + path + ".html";
+      var lePath = prefix + path + ".html";
 
       // If cached, use the compiled template.
-      if (JST[path]) {
-        return done(JST[path]);
+      if (JST[lePath]) {
+        return done(JST[lePath]);
       }
 
       // Put fetch into `async-mode`.
       //var done = this.async();
 
       // Seek out the template asynchronously.
-      $.get(app.root + path, function(contents) {
-        done(JST[path] = _.template(contents));
+      $.get(app.root + lePath, function(contents) {
+        done(JST[lePath] = _.template(contents));
       });
     },
 
@@ -50,7 +50,8 @@ define([
         if(view.postRender) {
           view.postRender();
         }
-      })    
+      });    
+
       return view;
     }
   };

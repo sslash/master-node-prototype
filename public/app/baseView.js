@@ -50,7 +50,8 @@ function(app) {
         
           $(args.selector).append(template);
         });
-      },this)
+      },this);
+
     },
 
 
@@ -72,7 +73,9 @@ function(app) {
       var dfr = $.Deferred();
       var that = this;
       this.doRender(this.template, this.$el)
-      .done(function(res) {dfr.resolve(that)});
+      .done(function(res) {
+        dfr.resolve(that);
+      });
       return dfr.promise();
     },
 
@@ -88,7 +91,8 @@ function(app) {
         if(view.postRender) {
           view.postRender();
         }
-      })    
+      });
+
       return view;
     }
 

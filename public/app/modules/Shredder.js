@@ -4,7 +4,7 @@ define([
   "app",
    "../baseView",
    "../session",
-   "modules/BattleRequest",
+   "modules/BattleRequest"
    //"modules/Twitter"
    //"../Mediator",
 ],
@@ -72,7 +72,7 @@ function(app, BaseView, Session, BattleRequest/*, Twitter*/) {
     * Given a shredder and a list of battles; checks if they are in a battle
     */
     getIfWeAreInBattleTogether : function (shredderId, listOfBattles){
-        for ( i in listOfBattles) {
+        for ( var i = 0; i < listOfBattles.length; i++) {
           if ( this.checkIfInBattle(shredderId, listOfBattles[i])){
             return listOfBattles[i]._id;
           }
@@ -90,7 +90,7 @@ function(app, BaseView, Session, BattleRequest/*, Twitter*/) {
     },
 
     getIfIHaveSentYouABR : function(shredderId, listOfBrs){
-      for ( i in listOfBrs) {
+      for ( var i = 0; i < listOfBrs.length; i++) {
           if ( this.checkIfIsBattlerInBr(shredderId, listOfBrs[i])){
             return listOfBrs[i];
           }
@@ -103,7 +103,7 @@ function(app, BaseView, Session, BattleRequest/*, Twitter*/) {
     },
 
     getIfYouHaveSentMeABR : function(shredderId, listOfBrs){
-      for ( i in listOfBrs) {
+      for ( var i = 0; i <listOfBrs.length; i++) {
           if ( this.checkIfIsBattleeInBr(shredderId, listOfBrs[i])){
             return listOfBrs[i]._id;
           }
@@ -129,10 +129,10 @@ function(app, BaseView, Session, BattleRequest/*, Twitter*/) {
     },
 
     initURL: function(attr){
-      if ( attr['page'] ) this.page = attr['page'];
-      if ( attr['query'] ) this.query = attr['query'];
-      if ( attr['offset'] ) this.offset = attr['offset'];
-    },
+      if ( attr.page ) this.page = attr.page;
+      if ( attr.query ) this.query = attr.query;
+      if ( attr.offset ) this.offset = attr.offset;
+    }
   });
 
 
@@ -188,7 +188,7 @@ function(app, BaseView, Session, BattleRequest/*, Twitter*/) {
         template : "shredders/shredderThumb",
         selector : this.shreddersListDiv
        });
-    },
+    }
 
    // Cleanup in parent
   });
@@ -207,7 +207,7 @@ function(app, BaseView, Session, BattleRequest/*, Twitter*/) {
       this.model = new Shredder.Model({id : this.options.shredderId});
       this.model.initURL({
         withShreds : 20
-      })
+      });
     },
 
     // Overridden because we need to fetch data before rendering!
@@ -220,7 +220,7 @@ function(app, BaseView, Session, BattleRequest/*, Twitter*/) {
           that.doRender(that.template, that.$el)
           .done(function(res) { 
             dfr.resolve(that);
-          })
+          });
         }
          // fail : render error page :)
         });
@@ -275,7 +275,7 @@ function(app, BaseView, Session, BattleRequest/*, Twitter*/) {
       if ( Session.getUser()._id != this.model.get('_id')) {
         console.log("render challenge");
         this.renderBattleRelationship("challengeToBattle", {
-          username : this.model.get('username'),
+          username : this.model.get('username')
         })
         .done(function() {
            $('#challengeToBattleButton').on("click",
@@ -299,7 +299,7 @@ function(app, BaseView, Session, BattleRequest/*, Twitter*/) {
 
     getIsLoggedInUser : function() {
       return Session.getUser()._id == this.model.get('_id');
-      this.render();
+      //this.render();
     },
 
     openChallengeModal : function() {
@@ -333,8 +333,9 @@ function(app, BaseView, Session, BattleRequest/*, Twitter*/) {
     renderBattleRelationship : function(template, model) {
       var dfr = $.Deferred();
       this.renderSimpleTemplate("shredder/" + template, function(){
-          return model})
-        .done( function(leTemplate) {
+          return model;
+      })
+      .done( function(leTemplate) {
           $('#battleRelationship').html(leTemplate);
           return dfr.resolve();
         });

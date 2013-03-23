@@ -63,9 +63,7 @@ function(app) {
 
     setShredderId : function(id) {
       this.shredderId = id;
-    },
-
-
+    }
   });
 
   // Return the module for AMD compliance.

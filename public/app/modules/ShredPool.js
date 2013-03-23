@@ -56,7 +56,7 @@ function(app, BaseView,  Session, Shred) {
         timeCreated : new Date(),
         videoPath : "",
         videoThumbnail : "",
-        shredComments : new Array(),
+        shredComments : [],
         tags : tagsArr,
         shredRating : {
           numberOfRaters : 0,
@@ -124,7 +124,7 @@ function(app, BaseView,  Session, Shred) {
         selector : "#mightKnowShredsListDiv", // Where shreds are appended
         shredTemplate : "shredpool/ShredInRow_mightKnow", // Template for a thumbnail
         divPrefix : "#mightKnow", // prefix for shredtemplates' div
-        nextBtn : ".nextMightKnow",
+        nextBtn : ".nextMightKnow"
       }); 
     this.subViews.push(this.mightKnowView);
 
@@ -192,7 +192,7 @@ function(app, BaseView,  Session, Shred) {
       app.Mediator.unsubscribe("createShredModalView", this);
       this.remove();
       this.unbind();
-    },
+    }
 
   });
 

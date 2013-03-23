@@ -7,13 +7,12 @@ require.config({
 
   paths: {
     //templates: '../templates',
-    video: 'http://vjs.zencdn.net/c/video',
+    video: '../vendor/js/libs/video/video',
     vendor: "../vendor"
   },
 
   shim: {
     "vendor/js/libs/bootstrap/bootstrap" : ['jquery']
   }
-
 });
  
