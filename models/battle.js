@@ -132,7 +132,7 @@ exports.getSentBattleRequestsForShredderWithId = function(uid) {
     Battle.find({ "battler._id" : {$in : faneesArr} })
     .or({"battlee._id" : {$in : faneesArr}})
     .limit(args.offset)
-    .skip(args.page*args.offset)
+    .skip((args.page-1)*args.offset)
     .sort('-timeCreated')
     .exec(function(err, doc) {dbTemplate.callback(err,doc,dfr)});
   });
@@ -148,7 +148,7 @@ exports.getLatestBattleShredsFromFanees = function(args) {
     Battle.find({ "battler._id" : {$in : faneesArr} })
     .or({"battlee._id" : {$in : faneesArr}})
     .limit(args.offset)
-    .skip(args.page*args.offset)
+    .skip((args.page-1)*args.offset)
     .sort('-lastBattleShred')
     .exec(function(err, doc) {dbTemplate.callback(err,doc,dfr)});
   });
