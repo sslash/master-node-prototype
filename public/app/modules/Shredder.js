@@ -191,7 +191,7 @@ function(app, BaseView, Session, BattleRequest/*, Twitter*/) {
     renderShredCollection : function() {
        this.serializeCollection({
         collection : this.collection,
-        template : "shredders/shredderThumb",
+        template : "shredders/ShredderThumb",
         selector : this.shreddersListDiv
        });
     }
