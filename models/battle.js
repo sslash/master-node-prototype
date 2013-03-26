@@ -129,6 +129,13 @@ exports.getSentBattleRequestsForShredderWithId = function(uid) {
   var dfr = $.Deferred();  
   shred.getFaneesForShredder(args.uid)
   .done(function(faneesArr){
+    console.log("FIKK DISSA: ");
+    if ( faneesArr) {
+    console.log(JSON.stringify(faneesArr));
+    for ( var i = 0; i < faneesArr.length; i ++) {
+      console.log(faneesArr[i].toString());
+    }
+  }
     Battle.find({ "battler._id" : {$in : faneesArr} })
     .or({"battlee._id" : {$in : faneesArr}})
     .limit(args.offset)
