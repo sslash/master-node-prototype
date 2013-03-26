@@ -136,8 +136,8 @@ exports.getSentBattleRequestsForShredderWithId = function(uid) {
     .skip((args.page)*args.offset)
     .sort('-timeCreated')
     .exec(function(err, doc) {
-      console.log("DONE: err " + err.toString();)
-      console.log("DONE: success " + doc.toString();)
+      console.log("DONE: err " + err.toString();
+      console.log("DONE: success " + doc.toString();
       dbTemplate.callback(err,doc,dfr)
     });
   });
