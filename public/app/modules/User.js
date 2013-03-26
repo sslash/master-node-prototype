@@ -82,7 +82,7 @@ populateSessionData : function(){
   // Fetch battle requests sent out
   $.ajax(url : '/api/battleRequests/sent/' + Session.getUser()._id,
     beforeSend : function(xhr) {
-          xhr.setRequestHeader("Authorization", "Basic " + token);
+          xhr.setRequestHeader("Authorization", "Basic ".concat(Session.getToken());
         },
     success : function(res) {
       Session.setSentBattleRequests(res);
@@ -91,7 +91,7 @@ populateSessionData : function(){
   // Fetch battles
   $.ajax( url: '/api/battles/' + Session.getUser()._id,
     beforeSend : function(xhr) {
-          xhr.setRequestHeader("Authorization", "Basic " + token);
+          xhr.setRequestHeader("Authorization", "Basic ".concat(Session.getToken()));
         },
     success : function(res) {
       Session.setBattles(res);
