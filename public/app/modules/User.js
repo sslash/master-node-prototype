@@ -44,11 +44,10 @@ function(app, Session, BattleRequest) {
           Session.setToken(token);
           that.fetchBattleRequests()
           .done(function(battleRequestCollection){
-          Session.setIncomingBattleRequests(battleRequestCollection);
-          
-          // Store on session here, if wanted
-          app.Mediator.publish("authenticationSuccess", battleRequestCollection);                    
-          that.populateSessionData();
+            Session.setIncomingBattleRequests(battleRequestCollection);          
+            // Store on session here, if wanted
+            app.Mediator.publish("authenticationSuccess", battleRequestCollection);                    
+            that.populateSessionData();
           });
       }
   });
@@ -81,14 +80,20 @@ updateSessionAddFanee : function(fanee) {
 populateSessionData : function(){
 
   // Fetch battle requests sent out
-  $.getJSON('/api/battleRequests/sent/' + Session.getUser()._id,
-    function(res) {
+  $.ajax(url : '/api/battleRequests/sent/' + Session.getUser()._id,
+    beforeSend : function(xhr) {
+          xhr.setRequestHeader("Authorization", "Basic " + token);
+        },
+    success : function(res) {
       Session.setSentBattleRequests(res);
   });
 
   // Fetch battles
-  $.getJSON('/api/battles/' + Session.getUser()._id,
-    function(res) {
+  $.ajax( url: '/api/battles/' + Session.getUser()._id,
+    beforeSend : function(xhr) {
+          xhr.setRequestHeader("Authorization", "Basic " + token);
+        },
+    success : function(res) {
       Session.setBattles(res);
   });
 
