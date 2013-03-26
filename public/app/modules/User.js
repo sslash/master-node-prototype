@@ -80,9 +80,11 @@ updateSessionAddFanee : function(fanee) {
 populateSessionData : function(){
 
   // Fetch battle requests sent out
+  console.log("FITTE: HENTER: " + Session.getToke());
   $.ajax(url : '/api/battleRequests/sent/' + Session.getUser()._id,
     beforeSend : function(xhr) {
-          xhr.setRequestHeader("Authorization", "Basic ".concat(Session.getToken());
+      console.log("oki)");
+          xhr.setRequestHeader("Authorization", ("Basic ".concat(Session.getToken()));
         },
     success : function(res) {
       Session.setSentBattleRequests(res);
@@ -91,7 +93,7 @@ populateSessionData : function(){
   // Fetch battles
   $.ajax( url: '/api/battles/' + Session.getUser()._id,
     beforeSend : function(xhr) {
-          xhr.setRequestHeader("Authorization", "Basic ".concat(Session.getToken()));
+          xhr.setRequestHeader("Authorization", ("Basic ".concat(Session.getToken())));
         },
     success : function(res) {
       Session.setBattles(res);
