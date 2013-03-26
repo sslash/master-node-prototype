@@ -127,7 +127,6 @@ exports.getSentBattleRequestsForShredderWithId = function(uid) {
  */
  exports.getNewBattleswithFanees = function(args) {
   var dfr = $.Deferred();  
-  console.log("getting battlez! " + args.offset + ", " + args.page);
   shred.getFaneesForShredder(args.uid)
   .done(function(faneesArr){
     Battle.find({ "battler._id" : {$in : faneesArr} })
@@ -136,8 +135,6 @@ exports.getSentBattleRequestsForShredderWithId = function(uid) {
     .skip((args.page)*args.offset)
     .sort('-timeCreated')
     .exec(function(err, doc) {
-      console.log("DONE: err " + err.toString();
-      console.log("DONE: success " + doc.toString();
       dbTemplate.callback(err,doc,dfr)
     });
   });

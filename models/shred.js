@@ -120,11 +120,15 @@ exports.getFaneesForShredder = function(uid) {
 
       if ( doc.get('fanees') ){
         var oldf = doc.get('fanees');
-        var f = $.map( oldf, function(value, key) {
-          return mongoose.Types.ObjectId(value._id.toString());
-        });
-
+        var f = [];
+        for ( var i = 0; i < oldf.length; i++ ){
+           f.push(mongoose.Types.ObjectId(oldf[i]._id.toString()));
+        }
+        //$.map( oldf, function(value, key) {
+          
+        //}).done(function(f){
         dfr.resolve( f );
+        //});
       } else {
         dfr.reject( "No fanees" );
       }
