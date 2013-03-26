@@ -127,6 +127,7 @@ exports.getSentBattleRequestsForShredderWithId = function(uid) {
  */
  exports.getNewBattleswithFanees = function(args) {
   var dfr = $.Deferred();  
+  console.log("getting battlez! " + args.offset + ", " + args.page);
   shred.getFaneesForShredder(args.uid)
   .done(function(faneesArr){
     Battle.find({ "battler._id" : {$in : faneesArr} })
@@ -143,6 +144,7 @@ exports.getSentBattleRequestsForShredderWithId = function(uid) {
 
 exports.getLatestBattleShredsFromFanees = function(args) {
   var dfr = $.Deferred();  
+  console.log("getting battle shreds! " + args.offset + ", " + args.page);
   shred.getFaneesForShredder(args.uid)
   .done(function(faneesArr){
     Battle.find({ "battler._id" : {$in : faneesArr} })
