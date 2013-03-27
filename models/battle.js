@@ -22,7 +22,7 @@ var BattleRequest = mongoose.model('battleRequest', new mongoose.Schema({
 
 
 var Battle = mongoose.model('battle', new mongoose.Schema({
-  _id : schema.Types.ObjectId,
+  //_id : schema.Types.ObjectId,
   battler : {
     _id : schema.Types.ObjectId,
     imgPath : String,
@@ -136,9 +136,8 @@ exports.getSentBattleRequestsForShredderWithId = function(uid) {
       for ( var i = 0; i < faneesArr.length; i ++) {
         console.log(faneesArr[i].toString());
       }
-      var f = []
-      f.push (faneesArr[0].toString);
-      Battle.find()
+     
+      Battle.find({"battler._id" : faneesArr[0].toString()});
       // Battle.find({ "battler._id" : {$in : f} })
       // .or({"battlee._id" : {$in : f}})
       .limit(args.offset)
@@ -160,8 +159,10 @@ exports.getLatestBattleShredsFromFanees = function(args) {
   console.log("getting battle shreds! " + args.offset + ", " + args.page);
   shred.getFaneesForShredder(args.uid)
   .done(function(faneesArr){
-    Battle.find({ "battler._id" : {$in : faneesArr} })
-    .or({"battlee._id" : {$in : faneesArr}})
+     var f = []
+      f.push (faneesArr[0].toString);
+    Battle.find({ "battler._id" : {$in : f} })
+    .or({"battlee._id" : {$in : f}})
     .limit(args.offset)
     .skip((args.page)*args.offset)
     .sort('-lastBattleShred')
