@@ -122,7 +122,6 @@ exports.getFaneesForShredder = function(uid) {
         var oldf = doc.get('fanees');
         var f = [];
         for ( var i = 0; i < oldf.length; i++ ){
-          // f.push(mongoose.Types.ObjectId(oldf[i]._id.toString()));
            f.push(oldf[i]._id.toString());
         }
         dfr.resolve( f );
