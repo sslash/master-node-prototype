@@ -7,11 +7,11 @@ var $          = require('jquery');
 var BattleRequest = mongoose.model('battleRequest', new mongoose.Schema({
   //_id : schema.Types.ObjectId,
   battler : {
-   // _id : schema.Types.ObjectId,
+    _id : schema.Types.ObjectId,
     username : String
   },
   battlee : {
-    //_id : schema.Types.ObjectId,
+    _id : schema.Types.ObjectId,
     username : String
   },
   timeCreated : Date,
