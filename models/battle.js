@@ -136,8 +136,10 @@ exports.getSentBattleRequestsForShredderWithId = function(uid) {
       for ( var i = 0; i < faneesArr.length; i ++) {
         console.log(faneesArr[i].toString());
       }
-      Battle.find({ "battler._id" : {$in : faneesArr} })
-      .or({"battlee._id" : {$in : faneesArr}})
+      var f = []
+      f.push (faneesArr[0].toString);
+      Battle.find({ "battler._id" : {$in : f} })
+      .or({"battlee._id" : {$in : f}})
       .limit(args.offset)
       .skip((args.page)*args.offset)
       .sort('-timeCreated')
