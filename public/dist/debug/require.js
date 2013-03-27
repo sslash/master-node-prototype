@@ -13873,12 +13873,12 @@ Shred.Views.RowView = BaseView.extend({
 
        for ( var i = start, y=0; i < stop; i++, y++){
         var model = this.collection.at(i);
-        // this.subViews[y].resetShredModel(model);
-        //  this.subViews[y].render()
-        //  .done(function(view) {
-        //    $(that.options.selector).append(view.$el.html()); 
-        //    view.resetListeners();  
-        //  });
+         this.subViews[y].resetShredModel(model);
+          this.subViews[y].render()
+          .done(function(view) {
+            $(that.options.selector).append(view.$el.html()); 
+            view.resetListeners();  
+          });
       }
     }
   }),
