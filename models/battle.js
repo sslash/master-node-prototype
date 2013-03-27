@@ -137,16 +137,11 @@ exports.getSentBattleRequestsForShredderWithId = function(uid) {
         console.log(faneesArr[i].toString());
       }
      
-     // Battle.find({ "battler._id" : {$in : f} })
        Battle.find({ $or : [
         {"battler._id" : {$in : faneesArr}},
         {"battlee._id" : {$in : faneesArr}}
         ]})
-      // .or({"battlee._id" : {$in : faneesArr}})
-      //.limit(args.offset)
-      .limit(20)
-      //.or({"battlee._id" : {$in : faneesArr}})
-      //.limit(20)
+      .limit(args.offset)
       .skip((args.page)*args.offset)
       .sort('-timeCreated')
       .exec(function(err, doc) {
@@ -164,17 +159,15 @@ exports.getLatestBattleShredsFromFanees = function(args) {
   var dfr = $.Deferred();  
   console.log("getting battle shreds! " + args.offset + ", " + args.page);
   shred.getFaneesForShredder(args.uid)
-  .done(function(faneesArr){
-     // var f = []
-     //  f.push (faneesArr[0].toString());
-    Battle.find({ "battler._id" : {$in : faneesArr} })
-   // .or({"battlee._id" : {$in : f}})
-    .limit(args.offset)
-    .or({"battlee._id" : {$in : faneesArr}})
-    .limit(args.offset)
-    .skip((args.page)*args.offset)
-    .sort('-lastBattleShred')
-    .exec(function(err, doc) {dbTemplate.callback(err,doc,dfr)});
+    .done(function(faneesArr){
+      Battle.find({ $or : [
+        {"battler._id" : {$in : faneesArr}},
+        {"battlee._id" : {$in : faneesArr}}
+        ]})
+      .limit(args.offset)
+      .skip((args.page)*args.offset)
+      .sort('-lastBattleShred')
+      .exec(function(err, doc) {dbTemplate.callback(err,doc,dfr)});
   });
 
   return dfr.promise();
