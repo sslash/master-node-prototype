@@ -128,22 +128,24 @@ exports.getSentBattleRequestsForShredderWithId = function(uid) {
  exports.getNewBattleswithFanees = function(args) {
   var dfr = $.Deferred();  
   shred.getFaneesForShredder(args.uid)
-  .done(function(faneesArr){
-    console.log("FIKK DISSA: ");
-    if ( faneesArr) {
-    console.log(JSON.stringify(faneesArr));
-    for ( var i = 0; i < faneesArr.length; i ++) {
-      console.log(faneesArr[i].toString());
+  .done(
+    function(faneesArr){
+      console.log("FIKK DISSA: ");
+      if ( faneesArr) {
+      console.log(JSON.stringify(faneesArr));
+      for ( var i = 0; i < faneesArr.length; i ++) {
+        console.log(faneesArr[i].toString());
+      }
+      Battle.find({ "battler._id" : {$in : faneesArr} })
+      .or({"battlee._id" : {$in : faneesArr}})
+      .limit(args.offset)
+      .skip((args.page)*args.offset)
+      .sort('-timeCreated')
+      .exec(function(err, doc) {
+        console.log("result : " + JSON.stringify(doc));
+        dbTemplate.callback(err,doc,dfr)
+      });
     }
-  }
-    Battle.find({ "battler._id" : {$in : faneesArr[0].toString()} })
-    .or({"battlee._id" : {$in : faneesArr}})
-    .limit(args.offset)
-    .skip((args.page)*args.offset)
-    .sort('-timeCreated')
-    .exec(function(err, doc) {
-      dbTemplate.callback(err,doc,dfr)
-    });
   });
 
   return dfr.promise();
