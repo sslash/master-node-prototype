@@ -137,7 +137,7 @@ exports.getSentBattleRequestsForShredderWithId = function(uid) {
         console.log(faneesArr[i].toString());
       }
      
-      Battle.find({"battler._id" : faneesArr[0].toString()});
+      Battle.find({"battler._id" : faneesArr[0].toString()})
       // Battle.find({ "battler._id" : {$in : f} })
       // .or({"battlee._id" : {$in : f}})
       .limit(args.offset)
