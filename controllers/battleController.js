@@ -33,12 +33,12 @@ exports.createBattle = function(req,res) {
   return battle.createBattle({
     battle : req.body
   }).done(function(doc){
-    if ( doc ) 
-      console.log("createbattle(): " + doc.toString());
+   // if ( doc ) 
+     // console.log("createbattle(): " + doc.toString());
     return res.send(doc); 
   })
   .fail(function(err){
-    console.log("create battle failed.." + err);
+    //console.log("create battle failed.." + err);
     return res.send(null);
   });
 }
@@ -53,11 +53,11 @@ exports.createBattleRequest = function(req,res) {
     battleRequest : req.body
   }).done(function(doc){
     if ( doc ) 
-      console.log("createbattleRequest(): " + doc.toString());
+     // console.log("createbattleRequest(): " + doc.toString());
     return res.send(doc); 
   })
   .fail(function(err){
-    console.log("create battle request failed.." + err);
+   // console.log("create battle request failed.." + err);
     return res.send(null);
   });
 }
@@ -77,7 +77,7 @@ exports.updateBattleRequest = function(req, res, next) {
     res.statusCode = 400;
     return res.send(null);
   }
-  console.log("Battle req file: " + req.files.file);
+ // console.log("Battle req file: " + req.files.file);
 
   var uid = req.params.uid;
   var filename = uid + "-" + req.files.file.name;
@@ -145,11 +145,11 @@ exports.getBattlesForTwo = function(req,res) {
     }
   ).done(function(doc){
     if ( doc ) 
-      console.log("getBattlesForTwo(): " + doc.toString());
+     // console.log("getBattlesForTwo(): " + doc.toString());
     return res.send(doc); 
   })
   .fail(function(err){
-    console.log("battleForTwoFailed.." + err);
+    //console.log("battleForTwoFailed.." + err);
     return res.send(null);
   });
 }
@@ -157,11 +157,11 @@ exports.getBattlesForTwo = function(req,res) {
 exports.getBattlesForShredder = function(req, res){
   return battle.getBattlesForShredder(req.params.uid)
   .done(function(battles){
-    console.log("battles: " + battles.length);
+    //console.log("battles: " + battles.length);
     return res.send(battles); 
   })
   .fail(function(err){
-    console.log("battles failed..");
+    //console.log("battles failed..");
     return res.send(null);
   });
 }
@@ -179,11 +179,11 @@ exports.getBattleRequestsForTwo = function(req,res) {
     }
   ).done(function(doc){
     if ( doc ) 
-      console.log("getBattleRequestsForTwo(): " + doc.toString());
+      //console.log("getBattleRequestsForTwo(): " + doc.toString());
     return res.send(doc); 
   })
   .fail(function(err){
-    console.log("battleRequestsForTwoFailed.." + err);
+    //console.log("battleRequestsForTwoFailed.." + err);
     return res.send(null);
   });
 }

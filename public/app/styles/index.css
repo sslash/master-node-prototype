@@ -1,3 +1,43 @@
+
+#main-content .container.fullWidth{
+	width:100%;
+	text-align: center;
+}
+
+.listContainer
+{
+	position: relative;
+	height: 600px;
+	width: 610px;
+	overflow:hidden;
+	white-space: nowrap;
+	margin-left:300px;
+}
+#list
+{
+	position:absolute;
+	display: block;
+	white-space: nowrap;
+}
+#list > div
+{
+	white-space: nowrap;
+	display: inline-block;
+	width: 600px;
+	height: 550px;
+	text-align: center;
+}
+
+
+#list > div img 
+{
+	width:550px;
+	height:400px;
+}
+.arrow-img {
+	line-height: 600px;
+}
+
 #maincontainer {
 	height: 300px;
 	width: 100%;

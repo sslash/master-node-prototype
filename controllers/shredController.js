@@ -18,11 +18,11 @@ exports.createShred = function(req, res) {
 
   shred.save(req.body)
   .done(function(doc) {
-    console.log("Shred created: " + JSON.stringify(doc));
+    //console.log("Shred created: " + JSON.stringify(doc));
     res.send(doc);
   })
   .fail(function(err) {
-    console.log("createShred() failed: " + JSON.stringify(err));
+   // console.log("createShred() failed: " + JSON.stringify(err));
     res.send(null);
   });
 }
@@ -36,21 +36,21 @@ exports.updateShred = function(req,res) {
   var shredData = req.body;
   delete shredData._id;
 
-  console.log("Shred data: " + JSON.stringify(shredData));
+  //console.log("Shred data: " + JSON.stringify(shredData));
   shred.updateShred({
       uid : req.params.uid,
       shred: shredData
     })
     .done(function(doc){
-      console.log("Shred updated: " + JSON.stringify(doc));
+   //   console.log("Shred updated: " + JSON.stringify(doc));
       res.send(doc);
     })
     .fail(function(err){
-      console.log("Shred updated failed " + err);
+    //  console.log("Shred updated failed " + err);
       res.send(null);
     })
   .fail(function(err){
-    console.log("saved file failed:" + err);
+    //console.log("saved file failed:" + err);
     res.send(null);
   })
 }
@@ -60,7 +60,7 @@ exports.updateShredVithVideo = function(req, res, next) {
     res.statusCode = 400;
     return res.send(null);
   }
-  console.log("Shred req file: " + req.files.file);
+//  console.log("Shred req file: " + req.files.file);
 
   var uid = req.params.uid;
   var filename = uid + "-" + req.files.file.name;
@@ -72,23 +72,23 @@ exports.updateShredVithVideo = function(req, res, next) {
   
   fileUploader.uploadFile(args)
   .done(function(file){
-    console.log("saved file: " + JSON.stringify(file));
+   // console.log("saved file: " + JSON.stringify(file));
 
     shred.updateShredWithVideo({
       uid : req.params.uid,
       videoPath : file.file.name
     })
     .done(function(doc){
-      console.log("Shred updated: " + JSON.stringify(doc));
+     // console.log("Shred updated: " + JSON.stringify(doc));
       res.send(doc);
     })
     .fail(function(err){
-      console.log("Shred updated failed " + err);
+    //  console.log("Shred updated failed " + err);
       res.send(null);
     })
   })
   .fail(function(err){
-    console.log("saved file failed:" + err);
+    //console.log("saved file failed:" + err);
     res.send(null);
   })
 }
@@ -119,7 +119,7 @@ exports.getShredsByRating = function(req, res) {
     return res.send(shreds); 
   })
   .fail(function(err){
-    console.log("find() - fail: " + JSON.stringify(err));
+  //  console.log("find() - fail: " + JSON.stringify(err));
     return res.send(null);
   });
 }

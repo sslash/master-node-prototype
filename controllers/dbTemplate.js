@@ -14,13 +14,13 @@ exports.callDb = function(obj) {
       })
   	 .done(function(doc){
   	 	if ( obj.msg ) {
-  	 		console.log(obj.msg + ": Res size = " + doc.length);
+  	 	//	console.log(obj.msg + ": Res size = " + doc.length);
   	 	}
     	return obj.res.send(doc); 
   	})
   	.fail(function(err){
   		if ( obj.msg ) {
-  	 		console.log(obj.msg + ": failed: " + JSON.stringify(err));
+  	 		//console.log(obj.msg + ": failed: " + JSON.stringify(err));
   	 	}
     	return obj.res.send(null);
   	})
@@ -40,13 +40,13 @@ exports.callDbNoUID = function(obj) {
       })
      .done(function(doc){
       if ( obj.msg ) {
-        console.log(obj.msg + ": Res size = " + doc.length);
+       // console.log(obj.msg + ": Res size = " + doc.length);
       }
       return obj.res.send(doc); 
     })
     .fail(function(err){
       if ( obj.msg ) {
-        console.log(obj.msg + ": failed: " + JSON.stringify(err));
+       // console.log(obj.msg + ": failed: " + JSON.stringify(err));
       }
       return obj.res.send(null);
     })

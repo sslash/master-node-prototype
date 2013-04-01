@@ -2,12 +2,12 @@
 define([
   // Application.
   "app",
-   "../baseView",
-   "../session",
-   "modules/BattleRequest"
+  "../baseView",
+  "../session",
+  "modules/BattleRequest"
    //"modules/Twitter"
    //"../Mediator",
-],
+   ],
 
 // Map dependencies from above array.
 function(app, BaseView, Session, BattleRequest/*, Twitter*/) {
@@ -22,7 +22,7 @@ function(app, BaseView, Session, BattleRequest/*, Twitter*/) {
     shredderLvlLabels : ["Beginner", "Skilled", "Awesome", "Shred king", "Wizard"],
 
     defaults : {
-        levelLabel : "Beginner"
+      levelLabel : "Beginner"
     },
 
     initURL : function(args) {
@@ -31,6 +31,24 @@ function(app, BaseView, Session, BattleRequest/*, Twitter*/) {
       }
     },
 
+    // Verify shredder != Session.shredder
+    // Add dig to guitar with index = guitarIndex
+    // Increase shredder level with 1 for this guitarist
+    addDig : function(i) {
+      var that = this;
+      if (this.get('_id') != Session.getUser()._id) {
+        $.ajax(this.urlRoot + '/' + this.get('_id') + '/guitar/' + i + '/dig',
+          {
+            beforeSend : function(xhr) {
+              xhr.setRequestHeader("Authorization", ("Basic ".concat(Session.getToken())));
+            },
+            type : 'PUT'
+          })
+        .done(function(res) {
+          that.increaseShredderLevel(1);
+        });
+      } // else give error to user
+    },
 
     parse : function(response, options){
 
@@ -55,17 +73,21 @@ function(app, BaseView, Session, BattleRequest/*, Twitter*/) {
     },
 
     increaseShredderLevel : function(level) {
+      var that = this;
 
       $.ajax(this.urlRoot + "/" + this.get('_id'),
-      {
+      { 
+        beforeSend : function(xhr) {
+              xhr.setRequestHeader("Authorization", ("Basic ".concat(Session.getToken())));
+        },
         data : { shredderLevel : level },
         type : "PUT"
+      })
+      .done(function(res){
+        that.set(res);
+        that.trigger('shredderUpdated');
       });
       return true;
-      // shredder.id = shredder.get('_id');
-      // var currLvl = shredder.get('shredderLevel'); 
-      // currLvl += level;
-      // shredder.save({shredderLevel : currLvl});
     },
 
     /*
@@ -79,7 +101,7 @@ function(app, BaseView, Session, BattleRequest/*, Twitter*/) {
           }
         }
       }
-        return null;
+      return null;
     },
 
     checkIfInBattle : function(shredderId, b){
@@ -93,32 +115,32 @@ function(app, BaseView, Session, BattleRequest/*, Twitter*/) {
 
     getIfIHaveSentYouABR : function(shredderId, listOfBrs){
       if ( listOfBrs) {
-      for ( var i = 0; i < listOfBrs.length; i++) {
+        for ( var i = 0; i < listOfBrs.length; i++) {
           if ( this.checkIfIsBattlerInBr(shredderId, listOfBrs[i])){
             return listOfBrs[i];
           }
         }
       }
-        return null;
+      return null;
     },
 
     checkIfIsBattlerInBr : function(shredderId, b){
-        return b.battlee._id == shredderId && b.battler._id == this.get('_id');
+      return b.battlee._id == shredderId && b.battler._id == this.get('_id');
     },
 
     getIfYouHaveSentMeABR : function(shredderId, listOfBrs){
       if ( listOfBrs){
-      for ( var i = 0; i <listOfBrs.length; i++) {
+        for ( var i = 0; i <listOfBrs.length; i++) {
           if ( this.checkIfIsBattleeInBr(shredderId, listOfBrs[i])){
             return listOfBrs[i]._id;
           }
         }
       }
-        return null;
+      return null;
     },
 
     checkIfIsBattleeInBr : function(shredderId, b){
-        return b.battler._id == shredderId && b.battlee._id == this.get('_id');
+      return b.battler._id == shredderId && b.battlee._id == this.get('_id');
     }
 
   });
@@ -161,14 +183,7 @@ function(app, BaseView, Session, BattleRequest/*, Twitter*/) {
         'page' : this.page,
         'offset' : this.offset
       });
-     // this.renderTwitterCollection();
     },
-/*
-    renderTwitterCollection : function() {
-      var twitterView = new Twitter.Views.Main();
-      this.showChildView("#twitterDiv", twitterView, this);
-    },
-*/
 
     fetchNextPage : function(event) {
       event.preventDefault();
@@ -189,122 +204,205 @@ function(app, BaseView, Session, BattleRequest/*, Twitter*/) {
     },
 
     renderShredCollection : function() {
-       this.serializeCollection({
-        collection : this.collection,
-        template : "shredders/ShredderThumb",
-        selector : this.shreddersListDiv
-       });
-    }
+     this.serializeCollection({
+      collection : this.collection,
+      template : "shredders/ShredderThumb",
+      selector : this.shreddersListDiv
+    });
+   }
 
    // Cleanup in parent
-  });
+ });
 
 
-  Shredder.Views.ShredderView = BaseView.extend({
-    template : "shredder/Shredder",
-    battleRelationshipDiv : "#battleRelationship",
+Shredder.Views.ShredderView = BaseView.extend({
+  template : "shredder/Shredder",
+  battleRelationshipDiv : "#battleRelationship",
 
-    events : {
-      "click #becomeFanButton" : "becomeFanClicked"
-    },
 
-    initialize : function() {
-      console.log("shredderID " + this.options.shredderId);
-      this.model = new Shredder.Model({id : this.options.shredderId});
-      this.model.initURL({
-        withShreds : 20
-      });
-    },
+  initialize : function() {
+    console.log("shredderID " + this.options.shredderId);
+    this.model = new Shredder.Model({id : this.options.shredderId});
+    this.model.initURL({
+      withShreds : 20
+    });
+
+    this.slideWidth = 610;
+    this.slideNumber = 0;
+    this.listenTo(this.model, 'shredderUpdated', this.renderTemplate);
+  },
+
+  events : {
+    "click #becomeFanButton" : "becomeFanClicked",
+    "mousedown .dragImage" : "mouseDownEvent" ,
+    "mousemove .dragImage" : "mouseMoveEvent",
+    "mouseup .dragImage" : "mouseUpEvent",
+    "click .guitarRightClick" : "rightClick",
+    "click .guitarLeftClick" : "leftClick",
+    "click .digBtn" : "digButton"
+  },
+
+  digButton : function() {
+    this.model.addDig(this.slideNumber);
+  },
+
+
+  rightClick: function(event){
+    event.preventDefault();
+    this.slideLeftOrRight(1);
+  },
+
+  leftClick: function(event){
+    event.preventDefault();
+    this.slideLeftOrRight(-1);
+  },
+
+  slideLeftOrRight : function(step) {
+    this.slideNumber += step; // 1 / 2 / 3 / 4 / ... n
+    var containingUL = document.getElementById("list");
+    this.slideTo(containingUL, -this.slideNumber * this.slideWidth);
+  },
+
+
+  slideTo : function(el, left) {
+    var steps = 10;
+    var timer = 25;
+    var elLeft = parseInt(el.style.left, 10) || 0;
+    var diff = left - elLeft;
+    var stepSize = diff / steps;
+
+    function step() {
+      elLeft += stepSize;
+      el.style.left = elLeft + "px";
+      if (--steps) {
+        setTimeout(step, timer);
+      }
+    }
+    step();
+  },
+
+  mouseUpEvent : function(event) {
+    this.mouseIsDown = false;
+    if ( this.movedRight === true) {
+      this.movedRight = false; 
+      this.slideLeftOrRight(1);
+    }else if ( this.movedLeft === true )  {
+      this.movedLeft = false;
+      this.slideLeftOrRight(-1);
+    }
+  },
+
+  mouseDownEvent : function(event) {
+    event.preventDefault();
+    this.mouseIsDown = true;
+    this.xCord = event.pageX;
+  },
+
+  mouseMoveEvent : function(event) {
+    event.preventDefault();
+    var currXcord = event.pageX;
+    if ( this.mouseIsDown) {
+      if ( (this.xCord - currXcord) > 40 ) {       
+        this.movedRight=true;
+      }else if ( (this.xCord - currXcord) < 40  ){
+        this.movedLeft=true;      
+      }
+    }
+  },
 
     // Overridden because we need to fetch data before rendering!
     render : function() {
+      console.log("kok");
       var dfr = $.Deferred();
       var that = this;
       this.model.fetch({ 
         data : {withShreds : 5},
-        success : function(model, response){
-          that.doRender(that.template, that.$el)
-          .done(function(res) { 
-            dfr.resolve(that);
-          });
+         success : function(){
+          that.renderTemplate(dfr);
         }
-         // fail : render error page :)
         });
-
       return dfr.promise();
     },
 
-    // Render battle relationship
-    postRender : function(){
-       var that = this;
+    renderTemplate : function(dfr) {
+      this.doRender(this.template, this.$el)
+        .done(function(res) { 
+          if ( dfr )
+            dfr.resolve(res);
+      });
+    },
 
-      var battleId = this.model.getIfWeAreInBattleTogether(
-        Session.getUser()._id, Session.getBattles());
-      if (battleId) {
-        console.log("in battle: " + battleId);
-        this.renderBattleRelationship("brPending", {
-          shredderUsername : that.model.get('username'),
-          battleId : battleId
-        });
-        return;
-      } 
+    // Render battle relationship
+    doPostRender : function(){
+     var that = this;
+
+     var battleId = this.model.getIfWeAreInBattleTogether(
+      Session.getUser()._id, Session.getBattles());
+     if (battleId) {
+      console.log("in battle: " + battleId);
+      this.renderBattleRelationship("brPending", {
+        shredderUsername : that.model.get('username'),
+        battleId : battleId
+      });
+      return;
+    } 
 
       // Special condition for incoming battle request!
       var battleReq = this.model.getIfIHaveSentYouABR(     
-          Session.getUser()._id, Session.getIncomingBattleRequests() );
+        Session.getUser()._id, Session.getIncomingBattleRequests() );
       if ( battleReq ) {
-         this.currBattleRequest = battleReq;
-         console.log("Br req: ");
-        this.renderBattleRelationship("brPending", {
-          shredder : this.model.toJSON(),
-          model : battleReq
-        })
-        .done(function() {
-          $('#checkBattleRequestButton').on("click",
-           $.proxy(that.openBattlePendingModal, that));
-          $('#acceptBattle').on("click",
-           $.proxy(that.notifyAcceptBattle, that));
-        });
-        return;
-      } 
-
-      var battleReqId = this.model.getIfYouHaveSentMeABR(
-          Session.getUser()._id, Session.getSentBattleRequests());
-      if ( battleReqId ) {
-        console.log("Br sent: ");
-         this.renderBattleRelationship("brSent", {
-          username : this.model.get('username')
-        });
-      return;
-      }
-
-      if ( Session.getUser()._id != this.model.get('_id')) {
-        console.log("render challenge");
-        this.renderBattleRelationship("challengeToBattle", {
-          username : this.model.get('username')
-        })
-        .done(function() {
-           $('#challengeToBattleButton').on("click",
-           $.proxy(that.openChallengeModal, that));
-          $('#addBattleShredButton').on("click",
-           $.proxy(that.createBattleRequest, that));
-        });
-      }
-    },
-
-    serialize : function() {
-      return { 
+       this.currBattleRequest = battleReq;
+       console.log("Br req: ");
+       this.renderBattleRelationship("brPending", {
         shredder : this.model.toJSON(),
-        renderFanBtn : !this.getIsLoggedInUser()
-      }; 
-    },
+        model : battleReq
+      })
+       .done(function() {
+        $('#checkBattleRequestButton').on("click",
+         $.proxy(that.openBattlePendingModal, that));
+        $('#acceptBattle').on("click",
+         $.proxy(that.notifyAcceptBattle, that));
+      });
+       return;
+     } 
 
-    becomeFanClicked : function() {
-      app.Mediator.publish("addFanee", this.model);
-    },
+     var battleReqId = this.model.getIfYouHaveSentMeABR(
+      Session.getUser()._id, Session.getSentBattleRequests());
+     if ( battleReqId ) {
+      console.log("Br sent: ");
+      this.renderBattleRelationship("brSent", {
+        username : this.model.get('username')
+      });
+      return;
+    }
 
-    getIsLoggedInUser : function() {
-      return Session.getUser()._id == this.model.get('_id');
+    if ( Session.getUser()._id != this.model.get('_id')) {
+      console.log("render challenge");
+      this.renderBattleRelationship("challengeToBattle", {
+        username : this.model.get('username')
+      })
+      .done(function() {
+       $('#challengeToBattleButton').on("click",
+         $.proxy(that.openChallengeModal, that));
+       $('#addBattleShredButton').on("click",
+         $.proxy(that.createBattleRequest, that));
+     });
+    }
+  },
+
+  serialize : function() {
+    return { 
+      shredder : this.model.toJSON(),
+      renderFanBtn : !this.getIsLoggedInUser()
+    }; 
+  },
+
+  becomeFanClicked : function() {
+    app.Mediator.publish("addFanee", this.model);
+  },
+
+  getIsLoggedInUser : function() {
+    return Session.getUser()._id == this.model.get('_id');
       //this.render();
     },
 
@@ -318,13 +416,13 @@ function(app, BaseView, Session, BattleRequest/*, Twitter*/) {
       var battleRequest = new BattleRequest.Model();
       var that = this;
       battleRequest.save(
-          {battleStyle: $('#battleStyle').val()},
-          {success: function(res) {
-            console.log("SAP: " + JSON.stringify(res));
-            battleRequest.uploadBattleShred(
-              new FormData(that.$('#addBattleRequestForm')[0]));
-          }}
-      ); 
+        {battleStyle: $('#battleStyle').val()},
+        {success: function(res) {
+          console.log("SAP: " + JSON.stringify(res));
+          battleRequest.uploadBattleShred(
+            new FormData(that.$('#addBattleRequestForm')[0]));
+        }}
+        ); 
     },
 
     notifyAcceptBattle : function() {
@@ -339,12 +437,12 @@ function(app, BaseView, Session, BattleRequest/*, Twitter*/) {
     renderBattleRelationship : function(template, model) {
       var dfr = $.Deferred();
       this.renderSimpleTemplate("shredder/" + template, function(){
-          return model;
+        return model;
       })
       .done( function(leTemplate) {
-          $('#battleRelationship').html(leTemplate);
-          return dfr.resolve();
-        });
+        $('#battleRelationship').html(leTemplate);
+        return dfr.resolve();
+      });
 
       return dfr.promise();
     },
@@ -353,7 +451,7 @@ function(app, BaseView, Session, BattleRequest/*, Twitter*/) {
       console.log("Killing shredder " + this.cid);
       this.remove();
       this.unbind();
-   }
+    }
 
   });
 

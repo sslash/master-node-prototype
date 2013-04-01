@@ -120,6 +120,7 @@ app.get('/api/shredders',passport.authenticate('basic', { session: false, failur
  shredderController.getAllShreddersByTimeCreated);
 app.put('/api/shredders/:uid/addFanee',passport.authenticate('basic', { session: false, failureRedirect: '/#login' }),shredderController.addFaneeForShredderWithId);
 app.put('/api/shredders/:uid', passport.authenticate('basic', { session: false, failureRedirect: '/#login' }),shredderController.updateShredder);
+app.put('/api/shredders/:uid/guitar/:gIndex/dig', passport.authenticate('basic', { session: false, failureRedirect: '/#login' }),shredderController.digGuitar);
 
 
 http.createServer(app).listen(app.get('port'), function(){

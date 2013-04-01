@@ -201,63 +201,11 @@ return __p;
 this["JST"]["app/templates/shredder/Shredder.html"] = function(obj){
 var __p='';var print=function(){__p+=Array.prototype.join.call(arguments, '')};
 with(obj||{}){
-__p+='<div class="container">\n\t<div class="marketing">\n\t\t<h1>'+
-( shredder.username )+
-'</h1>\n\t\t<p class="marketing-byline">'+
-( shredder.description )+
-'</p>\n\n\t\t<div class="row-fluid">\n\n\t\t\t<div class="span6">\n\t\t\t\t<img alt="Profile image"\n\t\t\t\t\tsrc="/pics/profiles/'+
-( shredder.profileImagePath )+
-'"\n\t\t\t\t\twidth="300px" class="img-rounded" />\n\t\t\t</div>\n\t\t\t<div class="span6">\n\t\t\t\t<p>Level: '+
-( shredder.levelLabel )+
-' </p>\n\t\t\t\t<p>Experience points: '+
-( shredder.shredderLevel  )+
-' </p>\n\n\t\t\t\t<!-- FAN OR BECOME FAN -->\n\t\t\t\t';
- if ( renderFanBtn ) { 
-;__p+='\n\t\t\t\t\t<button class="btn btn-success" id="becomeFanButton">Become a fan</button> \n\t\t\t\t';
- } 
-;__p+='\n\t\t\t</div> \n\t\t</div>\n\n\t\t<hr class="soften">\n\t\t<h2>Shred specs</h2>\n\t\t</br>\n\n\t\t<div class="row-fluid">\n\t\t\t<div class="span3">\n\t\t\t\t<p>Birthdate:</p>\n\t\t\t</div>\n\n\t\t\t<!--/span-->\n\t\t\t<div class="span9">\n\t\t\t\t<p>'+
-( shredder.birthdate  )+
-'</p>\n\t\t\t</div>\n\t\t\t<!--/span-->\n\t\t</div>\n\n\t\t<div class="row-fluid">\n\t\t\t<div class="span3">\n\t\t\t\t<p>Country:</p>\n\t\t\t</div>\n\n\t\t\t<!--/span-->\n\t\t\t<div class="span9">\n\t\t\t\t<p>'+
-( shredder.country  )+
-'</p>\n\t\t\t</div>\n\t\t\t<!--/span-->\n\t\t</div>\n\n\t\t<div class="row-fluid">\n\t\t\t<div class="span3">\n\t\t\t\t<p>Email:</p>\n\t\t\t</div>\n\n\t\t\t<!--/span-->\n\t\t\t<div class="span9">\n\t\t\t\t<p>'+
-( shredder.email  )+
-'</p>\n\t\t\t</div>\n\t\t\t<!--/span-->\n\t\t</div>\n\t\t<div class="row-fluid">\n\t\t\t<div class="span3">\n\t\t\t\t<p>Guitar:</p>\n\t\t\t</div>\n\n\t\t\t<!--/span-->\n\t\t\t<div class="span9">\n\t\t\t\t';
- _.each(shredder.guitars , function(guitar) { 
-;__p+='\n\t\t\t\t<p>'+
-( guitar )+
-'</p>\n\t\t\t\t';
- }); 
-;__p+='\n\t\t\t</div>\n\t\t</div>\n\t\t<!-- row fluid -->\n\n\t\t<div class="row-fluid">\n\t\t\t<div class="span3">\n\t\t\t\t<p>Equiptment:</p>\n\t\t\t</div>\n\n\t\t\t<!--/span-->\n\t\t\t<div class="span9">\n\t\t\t\t';
- _.each(shredder.equiptment , function(equiptment) { 
-;__p+='\n\t\t\t\t<p>'+
-( equiptment )+
-'</p>\n\t\t\t\t';
- }); 
-;__p+='\n\t\t\t</div>\n\t\t\t<!-- row fluid -->\n\t\t</div>\n\n\n\t\t<hr class="soften">\n\t\t<div id="battleRelationship"></div>\n\t\t<hr class="soften">\n\n\t\t<h2>'+
-( shredder.username  )+
-'\'s fanees</h2>\n\n\t\t<p>List fanees</p>\n\t\t<div class="row-fluid">\n\t\t\t<div class="span1">\n\t\t\t\t<a class="nextShred" href="#">&lsaquo;</a>\n\t\t\t</div>\n\t\t\t';
- _.each( _.first(shredder.fanees, 5), function(fanee) { 
-;__p+='\n\t\t\t<div class="span2">\n\t\t\t\t<a href="#shredder/'+
-( fanee._id )+
-'">\n\t\t\t\t\t<img class="imageClipped"\n\t\t\t\t\tsrc="/pics/profiles/'+
-( fanee.profileImagePath )+
-'" />\n\t\t\t\t</a>\t   \n\t\t\t\t<p>'+
-( fanee.username )+
-'</p> \n\t\t\t</div>\n\t\t\t';
- }) 
-;__p+='\n\n\t\t\t<div class="span1"> \n\t\t\t\t<a class="nextShred" href="#">&rsaquo;</a>\n\t\t\t</div>\n\t\t</div> \n\n\t\t<hr class="soften"> \n\t\t<div class="row-fluid">\n\t\t\t<div class="span1">\n\t\t\t\t<a class="nextShred" href="#">&lsaquo;</a>\n\t\t\t</div>\n\t\t\t<h2>'+
-( shredder.username  )+
-'\'s shreds</h2>\n\n\t\t\t';
- _.each( _.first(shredder.shreds, 5), function(shred) { 
-;__p+='\n\t\t\t<div class="span2">\n\t\t\t\t<a href="#shredder/'+
-( shred._id )+
-'">\n\t\t\t\t\t<img class="imageClipped"\n\t\t\t\t\tsrc="/vidz/'+
-( shred.videoThumbnail )+
-'" />\n\t\t\t\t</a>\t   \n\t\t\t\t<p>'+
-( shred.description )+
-'</p> \n\t\t\t</div>\n\t\t\t';
- }) 
-;__p+='\n\t\t\t<div class="span1"> \n\t\t\t\t<a class="nextShred" href="#">&rsaquo;</a>\n\t\t\t</div>\n\t\t</div>\n\t</div>\n</div>\n\n<footer>\n\t<p>&copy; Mikey 2012</p>\n</footer>';
+__p+='<h2>You\'re in a battle against '+
+( shredderUsername )+
+' </h2>\n</br> \n<a href="/battles/'+
+( battleId )+
+'" class="btn btn-info">Go to battle</a>  ';
 }
 return __p;
 };

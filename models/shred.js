@@ -147,7 +147,6 @@ exports.getFaneesForShredderNotInObj = function(uid, obj) {
       });
 
       $.map(obj, function(value, key) {
-       // console.log("FANFAN: " + value + " " + key );
      });
       dfr.resolve( obj );
     } else{

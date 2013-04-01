@@ -12,9 +12,23 @@ exports.getShredderById = function(shredderId, res) {
     res.send(doc);
   })
   .fail(function(err) {
-    console.log("get shredder failed: " + JSON.stringify(err));
+    //console.log("get shredder failed: " + JSON.stringify(err));
     res.send(null);
   });
+}
+
+exports.digGuitar = function(req,res) {
+    if ( !req.params.uid || !req.params.gIndex) {
+      res.statusCode = 400;
+      return res.send(null);
+    }
+    shredder.addDigForGuitar(req.params.uid, req.params.gIndex)
+    .done(function(doc){
+      res.send(doc);
+    })
+    .fail(function() {
+      res.send(null);
+    })
 }
 
 exports.addFaneeForShredderWithId = function(req,res) {
