@@ -50,10 +50,10 @@ passport.use(new BasicStrategy({},
           redisClient.get("uid:"+uid + ":password", function(err,res) {
 
             if ( password === res.toString() ) {
-              console.log("Login success");
+             // console.log("Login success");
               return done(null, {"username": username, "password":password, "uid":uid});
             } else {
-              console.log("wrong password: " + password);
+             // console.log("wrong password: " + password);
               return done(null, false,{ message: 'Incorrect password.' }); 
             }
           });
