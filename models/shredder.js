@@ -15,15 +15,15 @@ exports.Shredder = mongoose.model('shredder', new mongoose.Schema({
 
 
 
-exports.getShredderById = function(uid, withShreds) {
+exports.getShredderById = function(args) {
   var dfr = $.Deferred();
 
-  exports.Shredder.findById(uid, function(err,doc){
-    if ( withShreds ) {
+  exports.Shredder.findById(args.uid, function(err,doc){
+    if ( args.withShreds ) {
       shred.getShredsByShredder({
-        offset : withShreds,
+        offset : args.withShreds,
         page : 0,
-        uid : uid
+        uid : args.uid
       })
       .done(function(shredsRes){
         var toRet = doc.toJSON();
@@ -37,19 +37,13 @@ exports.getShredderById = function(uid, withShreds) {
   return dfr.promise();
 }
 
-exports.addDigForGuitar = function(uid, gIndex) {
+exports.addDigForGuitar = function(arg) {
   var dfr = $.Deferred();
   var guitarArr ={}
-  guitarArr["guitars." + gIndex + ".digs"] = 1;
+  guitarArr["guitars." + arg.gIndex + ".digs"] = 1;
 
-  exports.Shredder.update({"_id" : uid.toString()}, {$inc : guitarArr},
-    function(err, numberAffected, raw) {
-     if (err) {
-       dfr.reject(err);
-     }else{
-      return dfr.resolve();
-    }
-    });
+  exports.Shredder.update({"_id" : arg.uid.toString()}, {$inc : guitarArr},
+    function(err, numberAffected, raw) {dbTemplate.callback(err,raw,dfr);});
 return dfr.promise();
 }
 

@@ -104,21 +104,7 @@ function(app, BaseView, Session, Battle, Shredder) {
       shredComments.push(shredComment);
       this.save({'shredComments': shredComments});
       this.trigger('change');
-      
-      // var url = "shreds/" + this.get('id') + "/comments/";
-      // var that = this;
-      
-      // $.ajax(url, {
-      //     data : JSON.stringify(shredComment),
-      //     contentType : 'application/json',
-      //     type : 'POST',
-      //     success : function(model) {
-      //    console.log("succsessfully updated comments");
-      //    that.set({shredComments: model.shredComments}); 
-      //  }
-      // });
     }
-
   });
 
   // Default Collection.
@@ -216,13 +202,6 @@ Shred.Views.RowView = BaseView.extend({
   page : 1,
   offset : 20,
   advancePage : 1,
-
-    //events : {      
-      //"click .newShredsFromFaneesAncor" : "showVideoView",
-      //"keypress #tagSearch" : "populateShredsWithTags",
-     // "click .nextShred" : "nextShreds"
-    //},  
-
     initialize : function() {       
       if ( !this.options.windowSize) {
         this.options.windowSize = 4;

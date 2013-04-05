@@ -6,7 +6,6 @@ $               = require('jquery');
 _               = require('underscore')._;
 
 var Shred = mongoose.model('shred', new mongoose.Schema({
-  //_id : schema.Types.ObjectId,
   description: String,
   videoPath: String,
   owner : {
@@ -24,13 +23,25 @@ var Shred = mongoose.model('shred', new mongoose.Schema({
   tags : Array
 }),'shred');
 
+exports.deleteComment = function(args) {
+  var dfr = $.Deferred();
+  var commentsArr ={}
+  commentsArr["shredComments." + args.index] = 1;
+  Shred.update({"_id" : args.shredid.toString()}, {$unset : commentsArr} );
+  Shred.update({"_id" : args.shredid.toString()}, {$pull : {"shredComments" : null}});
+
+  return dfr.promise();
+}
 
 
 exports.save = function(attrs) {
 	var dfr = $.Deferred();
  var shred = new Shred(attrs);
 
+ var start = +new Date();
  shred.save(function(err, doc) {
+  var end = +new Date();
+  console.log("save shred: " + (end-start) + " milliseconds");
    if (!err) {
     dfr.resolve(doc);
   } else {
@@ -44,11 +55,14 @@ exports.save = function(attrs) {
 // Should support more finer grained updates
 exports.updateShred = function(args){
    var dfr = $.Deferred();
+   var start = +new Date();
   Shred.findOneAndUpdate(
     {"_id" : args.uid.toString()},
     args.shred
   )
   .exec(function(err,doc){
+     var end = +new Date();
+    console.log("update shred: " + (end-start) + " milliseconds");
     if ( !err ) {
       dfr.resolve(doc);
     }else{
@@ -87,19 +101,16 @@ exports.getShredsByShredder = function(attr) {
 
 }
 
-
-/**************************************
-*             VERB FUNCTIONS          *
-***************************************/
-
-
 exports.getShredsByRating = function(page, offset) {
   var dfr = $.Deferred();
+  var start = +new Date();
   Shred.find()
   .sort('-shredRating.currentRating')
   .limit(offset)
   .skip(page)
   .exec(function( err, shreds ) {
+     var end = +new Date();
+    console.log("rating: " + (end-start) + " milliseconds");
     if( !err ) {
       dfr.resolve( shreds );
     } else {
@@ -158,6 +169,7 @@ exports.getFaneesForShredderNotInObj = function(uid, obj) {
 
 exports.getNewShredsFromFanees = function(args) {
   var dfr = $.Deferred();
+  var start = +new Date();
   exports.getFaneesForShredder(args.uid)
   .done(function(f){
     Shred.find({"owner._id" : {$in: f} })
@@ -165,6 +177,9 @@ exports.getNewShredsFromFanees = function(args) {
     .skip(args.page*args.offset)
     .sort('-timeCreated')
     .exec(function(err,shreds) {
+      var end = +new Date();
+      console.log("shreds from fanees: " + (end-start) + " milliseconds");
+          
       if( !err ) {
         dfr.resolve( shreds );
       } else {
@@ -180,6 +195,7 @@ exports.getNewShredsFromFanees = function(args) {
 exports.getShredsYouMightKnow = function(args) {
   var dfr = $.Deferred();
   var faneesArr = [];
+  var start = +new Date();
   exports.getFaneesForShredder(args.uid)
   .done(function(f){
     var len = f.length;
@@ -207,6 +223,8 @@ exports.getShredsYouMightKnow = function(args) {
             .limit(args.offset)
             .skip(args.page*args.offset)
             .exec(function(e,d){
+              var end = +new Date();
+              console.log("shreds of interests" + (end-start) + " milliseconds");
               dbTemplate.callback(e,d,dfr)}); 
         }
       })
@@ -230,11 +248,15 @@ exports.getShredsByTags = function(args){
     arr.push(args.extras.tags)
   }
 
+   var start = +new Date();
  Shred.find({"tags" : {$in : arr} })
   .sort('-timeCreated')
   .limit(args.offset)
   .skip(args.page*args.offset)
-  .exec(function(e,d){ dbTemplate.callback(e,d,dfr)}); 
+  .exec(function(e,d){ 
+    var end = +new Date();
+    console.log("shreds by tags: " + (end-start) + " milliseconds");
+    dbTemplate.callback(e,d,dfr)}); 
 
  } else {
   Shred.find({})

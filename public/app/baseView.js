@@ -25,8 +25,6 @@ function(app) {
 
       // Must be implemented in subviews
       this.cleanUp(); 
-     // this.remove();
-      //this.unbind();
     },
 
     renderSimpleTemplate : function(leTemplate, serializer) {

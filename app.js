@@ -25,9 +25,6 @@ app.configure(function(){
   app.use(express.logger('dev'));
   app.use(express.bodyParser({uploadDir:'./uploads'}));
   app.use(express.methodOverride());
-  //app.use(express.cookieParser('your secret here'));
-  // Initialize Passport!  Note: no need to use session middleware when each
-  // request carries authentication credentials, as is the case with HTTP Basic.
   app.use(passport.initialize());
   app.use(app.router);
   app.use(express.static(path.join(application_root, 'public')));
@@ -50,10 +47,8 @@ passport.use(new BasicStrategy({},
           redisClient.get("uid:"+uid + ":password", function(err,res) {
 
             if ( password === res.toString() ) {
-             // console.log("Login success");
               return done(null, {"username": username, "password":password, "uid":uid});
             } else {
-             // console.log("wrong password: " + password);
               return done(null, false,{ message: 'Incorrect password.' }); 
             }
           });
@@ -80,7 +75,6 @@ app.post('/api/authenticate',
   passport.authenticate('basic', { session: false, failureRedirect: '/#login' }),
   function(req, res) {
     return shredderController.getShredderById(req.user.uid, res);
-    //res.json(req.user);
 });
 
 app.post('/api/shreds', passport.authenticate('basic', { session: false, failureRedirect: '/#login' }),
@@ -97,6 +91,7 @@ app.get('/api/shreds/shredsYouMightKnow/:uid', passport.authenticate('basic', { 
 app.get('/api/shreds/shredsByTags/:uid',passport.authenticate('basic', { session: false, failureRedirect: '/#login' }), shredController.getShredsByTags);
 app.get('/api/shreds/shredder/:uid',passport.authenticate('basic', { session: false, failureRedirect: '/#login' }), shredController.getShredsByShredder);
 app.put('/api/shreds/:uid',passport.authenticate('basic', { session: false, failureRedirect: '/#login' }), shredController.updateShred);
+app.put('/api/shreds/:shredid/deleteComment/:index',passport.authenticate('basic', { session: false, failureRedirect: '/#login' }), shredController.deleteComment);
 
 /* Battles */
 app.post('/api/battles',passport.authenticate('basic', { session: false, failureRedirect: '/#login' }), battleController.createBattle);

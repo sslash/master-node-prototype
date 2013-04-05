@@ -123,8 +123,7 @@ function(app, BaseView, Shred, User, Battle, BattleRequest, /*Mediator,*/ Sessio
             numberOfRaters : 0,
             currentRating : 0
           }
-      };
-      
+      };      
       
       var battleRound = {
           battlersShred: battleShred,

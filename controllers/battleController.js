@@ -33,12 +33,9 @@ exports.createBattle = function(req,res) {
   return battle.createBattle({
     battle : req.body
   }).done(function(doc){
-   // if ( doc ) 
-     // console.log("createbattle(): " + doc.toString());
     return res.send(doc); 
   })
   .fail(function(err){
-    //console.log("create battle failed.." + err);
     return res.send(null);
   });
 }
@@ -52,12 +49,9 @@ exports.createBattleRequest = function(req,res) {
   return battle.createBattleRequest({
     battleRequest : req.body
   }).done(function(doc){
-    if ( doc ) 
-     // console.log("createbattleRequest(): " + doc.toString());
     return res.send(doc); 
   })
   .fail(function(err){
-   // console.log("create battle request failed.." + err);
     return res.send(null);
   });
 }
@@ -77,8 +71,6 @@ exports.updateBattleRequest = function(req, res, next) {
     res.statusCode = 400;
     return res.send(null);
   }
- // console.log("Battle req file: " + req.files.file);
-
   var uid = req.params.uid;
   var filename = uid + "-" + req.files.file.name;
   var args = {
@@ -89,28 +81,23 @@ exports.updateBattleRequest = function(req, res, next) {
   
   fileUploader.uploadFile(args)
   .done(function(file){
-    console.log("saved file: " + JSON.stringify(file));
 
     battle.updateBattleRequest({
       uid : req.params.uid,
       videoPath : file.file.name
     })
     .done(function(doc){
-      console.log("battleRequest updated: " + JSON.stringify(doc));
       res.send(doc);
     })
     .fail(function(err){
-      console.log("battleRequest updated failed " + err);
       res.send(null);
     })
   })
   .fail(function(err){
-    console.log("saved file filed:" + err);
     res.send(null);
   })
 }
 
-/* Shredhub 1.0 API */
 exports.getNewBattleswithFanees = function(req, res) {
   return dbTemplate.callDb(
   {
@@ -144,12 +131,9 @@ exports.getBattlesForTwo = function(req,res) {
       shredder2 : req.param('shredder2')    
     }
   ).done(function(doc){
-    if ( doc ) 
-     // console.log("getBattlesForTwo(): " + doc.toString());
     return res.send(doc); 
   })
   .fail(function(err){
-    //console.log("battleForTwoFailed.." + err);
     return res.send(null);
   });
 }
@@ -157,11 +141,9 @@ exports.getBattlesForTwo = function(req,res) {
 exports.getBattlesForShredder = function(req, res){
   return battle.getBattlesForShredder(req.params.uid)
   .done(function(battles){
-    //console.log("battles: " + battles.length);
     return res.send(battles); 
   })
   .fail(function(err){
-    //console.log("battles failed..");
     return res.send(null);
   });
 }
@@ -178,12 +160,9 @@ exports.getBattleRequestsForTwo = function(req,res) {
       shredder2 : req.param('shredder2')    
     }
   ).done(function(doc){
-    if ( doc ) 
-      //console.log("getBattleRequestsForTwo(): " + doc.toString());
     return res.send(doc); 
   })
   .fail(function(err){
-    //console.log("battleRequestsForTwoFailed.." + err);
     return res.send(null);
   });
 }

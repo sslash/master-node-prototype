@@ -5,7 +5,6 @@ var dbTemplate = require('../controllers/dbTemplate');
 var $          = require('jquery');
 
 var BattleRequest = mongoose.model('battleRequest', new mongoose.Schema({
-  //_id : schema.Types.ObjectId,
   battler : {
     _id : schema.Types.ObjectId,
     username : String
@@ -22,7 +21,6 @@ var BattleRequest = mongoose.model('battleRequest', new mongoose.Schema({
 
 
 var Battle = mongoose.model('battle', new mongoose.Schema({
-  //_id : schema.Types.ObjectId,
   battler : {
     _id : schema.Types.ObjectId,
     imgPath : String,
@@ -120,11 +118,6 @@ exports.getSentBattleRequestsForShredderWithId = function(uid) {
   return dfr.promise();
 }
 
-/**
- * GET /api/battles/withFanees/:uid
- *
- * TODO: finish this
- */
  exports.getNewBattleswithFanees = function(args) {
   var dfr = $.Deferred();  
   shred.getFaneesForShredder(args.uid)
@@ -147,7 +140,6 @@ exports.getSentBattleRequestsForShredderWithId = function(uid) {
 
   return dfr.promise();
 }
-
 
 exports.getLatestBattleShredsFromFanees = function(args) {
   var dfr = $.Deferred();  

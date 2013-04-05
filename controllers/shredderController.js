@@ -1,34 +1,27 @@
-var shredder  	= require('../models/shredder'),
+  var shredder  	= require('../models/shredder'),
 dbTemplate	 	= require('./dbTemplate'),
 $             	= require('jquery');
 
-
-/**
-* Get a shredder by the given id
-*/
 exports.getShredderById = function(shredderId, res) {
-  shredder.getShredderById(shredderId)
-  .done(function(doc) {
-    res.send(doc);
-  })
-  .fail(function(err) {
-    //console.log("get shredder failed: " + JSON.stringify(err));
-    res.send(null);
-  });
+  return dbTemplate.doCall(
+      shredder.getShredderById, {
+        uid: shredderId,
+        res : res
+      });
 }
 
 exports.digGuitar = function(req,res) {
     if ( !req.params.uid || !req.params.gIndex) {
       res.statusCode = 400;
       return res.send(null);
-    }
-    shredder.addDigForGuitar(req.params.uid, req.params.gIndex)
-    .done(function(doc){
-      res.send(doc);
-    })
-    .fail(function() {
-      res.send(null);
-    })
+   }
+
+    return dbTemplate.doCall(
+      shredder.addDigForGuitar, {
+        uid: req.params.uid, 
+        gIndex : req.params.gIndex,
+        res : res
+      });
 }
 
 exports.addFaneeForShredderWithId = function(req,res) {
@@ -56,21 +49,18 @@ exports.getAllShreddersByTimeCreated = function(req,res) {
   });
 }
 
-/* Shredhub 1.0 API */
-
 exports.apiGetShredderById = function(req,res) {
   if ( !req.params.uid ) {
     res.statusCode = 400;
     return res.send(null);
   }
 
-  shredder.getShredderById(req.params.uid, req.query.withShreds)
-  .done(function(doc){
-    res.send(doc);
-  })
-  .fail(function() {
-    res.send(null);
-  })
+  return dbTemplate.doCall(
+      shredder.getShredderById, {
+        uid: req.params.uid,
+        withShreds:req.query.withShreds,
+        res:res
+       });
 }
 
 exports.updateShredder = function(req,res) {

@@ -95,9 +95,6 @@ function(app, BaseView,  Session, Shred) {
       this.shredNewsView = new Shred.Views.ShredNewsView({
         shredderId : shredderId
       });
-     //var shredNewsView = new Shred.Views.RowView({el: "#shredNews"});
-    // shredNewsView.render();
-    // console.log("rendered new shreds view");
     
     this.topShredsView = new Shred.Views.RowView(
     {

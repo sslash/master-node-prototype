@@ -28,16 +28,12 @@ function(app) {
               type: 'POST', // Should be put, but has to be POST due to spring 
               xhr: function() {  // custom xhr
                   myXhr = $.ajaxSettings.xhr(); 
-                  if(myXhr.upload){ // check if upload property exists
-                      //myXhr.upload.addEventListener('progress',that.progressHandlingFunction, false); // for handling the progress of the upload
-                  } 
                   return myXhr;
               },
               //Ajax events
               beforeSend: function(){},
               success: function(res){
                 console.log('done sending!'); 
-                //$(that.modal).modal('hide');  
               },
               error: function(res){
                 console.log('error occured: ' + res);
